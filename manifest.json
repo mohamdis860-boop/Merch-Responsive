@@ -1,0 +1,61 @@
+{
+    "name": "متجرنا - تسوق أونلاين",
+    "short_name": "متجرنا",
+    "description": "متجرك الإلكتروني الموثوق — منتجات أصلية، أسعار منافسة، وتوصيل سريع لجميع المحافظات.",
+    "start_url": "/Merch/",
+    "scope": "/Merch/",
+    "id": "/Merch/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0a0a1a",
+    "theme_color": "#ff6b6b",
+    "lang": "ar",
+    "dir": "rtl",
+    "categories": ["shopping", "ecommerce"],
+    "icons": [
+        {
+            "src": "/Merch/icons/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/Merch/icons/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/Merch/icons/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/Merch/icons/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "المنتجات",
+            "short_name": "المنتجات",
+            "url": "/Merch/Pages/products.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "السلة",
+            "short_name": "السلة",
+            "url": "/Merch/Pages/cart.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "تتبع الطلب",
+            "short_name": "تتبع",
+            "url": "/Merch/Pages/order-tracking.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+        }
+    ]
+}

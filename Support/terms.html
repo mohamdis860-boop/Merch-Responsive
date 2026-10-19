@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشروط والأحكام | متجرنا</title>
+    <meta name="description" content="الشروط والأحكام لاستخدام موقع متجرنا — يرجى القراءة بعناية.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .terms-hero {
+            padding: 70px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terms-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.12), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .terms-hero .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 107, 107, 0.12);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 50px;
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terms-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terms-hero .meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terms-hero .meta i {
+            color: #ff6b6b;
+        }
+
+        .terms-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px 80px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toc {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px 20px;
+            backdrop-filter: blur(10px);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .toc::-webkit-scrollbar { width: 4px; }
+        .toc::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 107, 0.4);
+            border-radius: 4px;
+        }
+
+        .toc h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .toc h3 i { color: #ff6b6b; }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc ul li {
+            margin-bottom: 4px;
+        }
+
+        .toc ul li a {
+            display: block;
+            padding: 8px 12px;
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.25s;
+            border-right: 2px solid transparent;
+        }
+
+        .toc ul li a:hover {
+            color: #fff;
+            background: rgba(255, 107, 107, 0.08);
+            border-right-color: #ff6b6b;
+            padding-right: 16px;
+        }
+
+        .toc ul li a.active {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.12);
+            border-right-color: #ff6b6b;
+        }
+
+        .terms-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 50px 45px;
+            backdrop-filter: blur(10px);
+        }
+
+        .terms-content > p.intro {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 107, 107, 0.06);
+            border-right: 3px solid #ff6b6b;
+            border-radius: 10px;
+        }
+
+        .terms-section {
+            padding-top: 24px;
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+
+        .terms-section h2 {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .terms-section h2 .num {
+            display: inline-grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .terms-section p,
+        .terms-section li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .terms-section ul {
+            padding-right: 24px;
+            margin-bottom: 16px;
+        }
+
+        .terms-section ul li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .terms-section ul li::marker {
+            color: #ff6b6b;
+        }
+
+        .terms-section strong {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .terms-section a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .terms-section a:hover {
+            text-decoration: underline;
+        }
+
+        .notice {
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255, 217, 61, 0.08);
+            border-right: 3px solid #ffd93d;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .notice i {
+            color: #ffd93d;
+            font-size: 1.1rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .notice.info {
+            background: rgba(108, 92, 231, 0.08);
+            border-right-color: #6c5ce7;
+        }
+
+        .notice.info i { color: #6c5ce7; }
+
+        .terms-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: rgba(255, 107, 107, 0.4);
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .btn-action.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-action.primary:hover {
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .terms-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 20px 60px;
+            }
+
+            .toc {
+                position: static;
+                max-height: none;
+            }
+
+            .terms-content {
+                padding: 30px 22px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .terms-hero {
+                padding: 50px 20px 30px;
+            }
+
+            .terms-section h2 {
+                font-size: 1.15rem;
+            }
+
+            .terms-section h2 .num {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+
+            .terms-actions {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <section class="terms-hero">
+        <span class="badge" data-aos="fade-down">
+            <i class="fas fa-file-contract"></i>
+            اتفاقية الاستخدام
+        </span>
+        <h1 data-aos="fade-up" data-aos-delay="100">الشروط والأحكام</h1>
+        <div class="meta" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-clock"></i>
+            آخر تحديث: <span id="lastUpdate">—</span>
+        </div>
+    </section>
+
+    <div class="terms-layout">
+
+        <aside class="toc" data-aos="fade-left">
+            <h3><i class="fas fa-list-ul"></i> فهرس المحتوى</h3>
+            <ul id="tocList">
+                <li><a href="#s1">1. مقدمة</a></li>
+                <li><a href="#s2">2. التعريفات</a></li>
+                <li><a href="#s3">3. قبول الشروط</a></li>
+                <li><a href="#s4">4. الحساب الشخصي</a></li>
+                <li><a href="#s5">5. الطلبات والأسعار</a></li>
+                <li><a href="#s6">6. الدفع</a></li>
+                <li><a href="#s7">7. الشحن والتوصيل</a></li>
+                <li><a href="#s8">8. الاسترجاع والاستبدال</a></li>
+                <li><a href="#s9">9. الملكية الفكرية</a></li>
+                <li><a href="#s10">10. تحديد المسؤولية</a></li>
+                <li><a href="#s11">11. التعديلات</a></li>
+                <li><a href="#s12">12. القانون المعمول به</a></li>
+                <li><a href="#s13">13. التواصل</a></li>
+            </ul>
+        </aside>
+
+        <main class="terms-content" data-aos="fade-up">
+
+            <p class="intro">
+                مرحباً بك في <strong>متجرنا</strong>. باستخدامك للموقع، فإنك توافق على الشروط والأحكام
+                الموضحة أدناه. يرجى قراءتها بعناية قبل إتمام أي عملية شراء.
+            </p>
+
+            <section class="terms-section" id="s1">
+                <h2><span class="num">1</span> مقدمة</h2>
+                <p>
+                    تنظم هذه الشروط والأحكام ("الشروط") استخدامك لموقع <strong>متجرنا</strong>
+                    ("الموقع")، وتُعد اتفاقية ملزمة بينك وبين الموقع. باستخدامك للموقع أو أي من
+                    خدماته، فإنك تقر بموافقتك الكاملة على هذه الشروط.
+                </p>
+                <p>
+                    إذا كنت لا توافق على أي بند من هذه الشروط، يرجى التوقف عن استخدام الموقع فوراً.
+                </p>
+            </section>
+
+            <section class="terms-section" id="s2">
+                <h2><span class="num">2</span> التعريفات</h2>
+                <ul>
+                    <li><strong>الموقع:</strong> موقع "متجرنا" الإلكتروني بجميع صفحاته وخدماته.</li>
+                    <li><strong>المستخدم:</strong> أي شخص يزور الموقع أو يستخدم خدماته.</li>
+                    <li><strong>العميل:</strong> المستخدم الذي قام بإنشاء حساب أو تقديم طلب.</li>
+                    <li><strong>المنتجات:</strong> جميع السلع المعروضة للبيع على الموقع.</li>
+                    <li><strong>الطلب:</strong> عملية شراء منتج أو أكثر عبر الموقع.</li>
+                </ul>
+            </section>
+
+            <section class="terms-section" id="s3">
+                <h2><span class="num">3</span> قبول الشروط</h2>
+                <p>
+                    باستخدامك للموقع، فإنك تقر بأنك:
+                </p>
+                <ul>
+                    <li>بلغت السن القانونية (18 عاماً على الأقل).</li>
+                    <li>تمتلك الأهلية القانونية الكاملة لإبرام العقود.</li>
+                    <li>ستستخدم الموقع للأغراض المشروعة فقط.</li>
+                </ul>
+                <div class="notice">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        استخدام الموقع لأي غرض غير قانوني قد يعرضك للمساءلة القانونية.
+                    </div>
+                </div>
+            </section>
+
+            <section class="terms-section" id="s4">
+                <h2><span class="num">4</span> الحساب الشخصي</h2>
+                <p>
+                    لإنشاء حساب على الموقع، يجب عليك تقديم معلومات صحيحة وحديثة. أنت مسؤول تماماً عن:
+                </p>
+                <ul>
+                    <li>الحفاظ على سرية بيانات الدخول (الإيميل وكلمة المرور).</li>
+                    <li>جميع الأنشطة التي تتم من خلال حسابك.</li>
+                    <li>إبلاغنا فوراً في حال اكتشاف أي استخدام غير مصرح به.</li>
+                </ul>
+                <p>
+                    نحتفظ بحق إيقاف أو حذف أي حساب يخالف هذه الشروط دون إشعار مسبق.
+                </p>
+            </section>
+
+            <section class="terms-section" id="s5">
+                <h2><span class="num">5</span> الطلبات والأسعار</h2>
+                <ul>
+                    <li>جميع الأسعار معروضة بالجنيه المصري (ج.م) وقابلة للتغيير دون إشعار مسبق.</li>
+                    <li>نحتفظ بحق رفض أو إلغاء أي طلب في حال وجود خطأ في السعر أو التوفر.</li>
+                    <li>يُعد الطلب مؤكداً فقط بعد استلامك رسالة تأكيد الطلب.</li>
+                    <li>الأسعار المعروضة لا تشمل مصاريف الشحن إلا إذا ذُكر خلاف ذلك.</li>
+                </ul>
+            </section>
+
+            <section class="terms-section" id="s6">
+                <h2><span class="num">6</span> الدفع</h2>
+                <p>نوفر الطرق التالية للدفع:</p>
+                <ul>
+                    <li>الدفع عند الاستلام (Cash on Delivery).</li>
+                    <li>بطاقات الائتمان (Visa / Mastercard).</li>
+                    <li>المحافظ الإلكترونية (Vodafone Cash / InstaPay).</li>
+                </ul>
+                <div class="notice info">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        جميع عمليات الدفع مشفرة وآمنة، ولا نحتفظ بأي بيانات بنكية على سيرفراتنا.
+                    </div>
+                </div>
+            </section>
+
+            <section class="terms-section" id="s7">
+                <h2><span class="num">7</span> الشحن والتوصيل</h2>
+                <ul>
+                    <li>مدة التوصيل: 24-48 ساعة للقاهرة والجيزة، و2-5 أيام لباقي المحافظات.</li>
+                    <li>الشحن مجاني للطلبات فوق 500 جنيه.</li>
+                    <li>قد تتأخر بعض الطلبات بسبب ظروف خارجة عن إرادتنا (طقس، أعياد رسمية، إلخ).</li>
+                    <li>يجب التأكد من صحة العنوان ورقم الهاتف قبل تأكيد الطلب.</li>
+                </ul>
+            </section>
+
+            <section class="terms-section" id="s8">
+                <h2><span class="num">8</span> الاسترجاع والاستبدال</h2>
+                <p>يحق لك إرجاع المنتج خلال <strong>14 يوماً</strong> من تاريخ الاستلام، بشرط:</p>
+                <ul>
+                    <li>أن يكون المنتج بحالته الأصلية.</li>
+                    <li>أن يكون في عبوته الأصلية كاملة.</li>
+                    <li>أن يكون معه فاتورة الشراء.</li>
+                </ul>
+                <p>
+                    يُعاد المبلغ خلال 5-7 أيام عمل من استلامنا للمنتج ومراجعته.
+                    في حال وجود عيب مصنعي، نتحمل نحن مصاريف الشحن.
+                </p>
+            </section>
+
+            <section class="terms-section" id="s9">
+                <h2><span class="num">9</span> الملكية الفكرية</h2>
+                <p>
+                    جميع المحتويات على الموقع — بما في ذلك النصوص، الصور، الشعارات، التصاميم،
+                    والأكواد — مملوكة لـ <strong>متجرنا</strong> أو مرخصة له، ومحمية بموجب قوانين
+                    الملكية الفكرية.
+                </p>
+                <p>يُمنع منعاً باتاً:</p>
+                <ul>
+                    <li>نسخ أو إعادة نشر أي محتوى دون إذن كتابي مسبق.</li>
+                    <li>استخدام شعارات الموقع أو علاماته التجارية.</li>
+                    <li>إجراء أي تعديل أو إعادة هندسة للموقع.</li>
+                </ul>
+            </section>
+
+            <section class="terms-section" id="s10">
+                <h2><span class="num">10</span> تحديد المسؤولية</h2>
+                <p>
+                    نقدم الموقع وخدماته "كما هي" دون أي ضمانات صريحة أو ضمنية.
+                    لا نتحمل أي مسؤولية عن:
+                </p>
+                <ul>
+                    <li>أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام الموقع.</li>
+                    <li>انقطاع الخدمة أو الأخطاء التقنية الخارجة عن إرادتنا.</li>
+                    <li>أي محتوى ينشره المستخدمون على الموقع.</li>
+                </ul>
+            </section>
+
+            <section class="terms-section" id="s11">
+                <h2><span class="num">11</span> التعديلات</h2>
+                <p>
+                    نحتفظ بحق تعديل هذه الشروط في أي وقت. سيتم نشر التعديلات على هذه الصفحة
+                    مع تحديث تاريخ "آخر تحديث". استمرارك في استخدام الموقع بعد نشر التعديلات
+                    يُعد موافقة ضمنية عليها.
+                </p>
+            </section>
+
+            <section class="terms-section" id="s12">
+                <h2><span class="num">12</span> القانون المعمول به</h2>
+                <p>
+                    تخضع هذه الشروط وتُفسر وفقاً لقوانين جمهورية مصر العربية. أي نزاع ينشأ عن
+                    استخدام الموقع يكون من اختصاص المحاكم المصرية المختصة.
+                </p>
+            </section>
+
+            <section class="terms-section" id="s13">
+                <h2><span class="num">13</span> التواصل</h2>
+                <p>لو عندك أي سؤال بخصوص هذه الشروط، تقدر تتواصل معنا من خلال:</p>
+                <ul>
+                    <li>📧 الإيميل: <a href="mailto:mohamdis860@gmail.com">mohamdis860@gmail.com</a></li>
+                    <li>📱 التليفون: <a href="tel:01026106479" dir="ltr">0102 610 6479</a></li>
+                    <li>📍 العنوان: فيصل، الجيزة</li>
+                    <li>🕐 ساعات العمل: يومياً — 12 ساعة</li>
+                </ul>
+            </section>
+
+            <div class="terms-actions">
+                <button class="btn-action primary" onclick="window.print()">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
+                <button class="btn-action" onclick="copyLink()">
+                    <i class="fas fa-link"></i> نسخ الرابط
+                </button>
+                <a href="privacy.html" class="btn-action">
+                    <i class="fas fa-shield-alt"></i> سياسة الخصوصية
+                </a>
+                <a href="../Pages/contact.html" class="btn-action">
+                    <i class="fas fa-paper-plane"></i> تواصل معنا
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            const lastUpdateEl = document.getElementById('lastUpdate');
+            if (lastUpdateEl) {
+                const d = new Date();
+                const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+                lastUpdateEl.textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+            }
+
+            const tocLinks = document.querySelectorAll('#tocList a');
+            const sections = document.querySelectorAll('.terms-section');
+
+            function updateActiveToc() {
+                let current = '';
+                const scrollY = window.scrollY + 100;
+
+                sections.forEach(section => {
+                    if (scrollY >= section.offsetTop) {
+                        current = section.id;
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveToc);
+            updateActiveToc();
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            window.copyLink = function() {
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    if (window.showToast) {
+                        window.showToast('تم نسخ الرابط', 'success');
+                    }
+                }).catch(() => {
+                    if (window.showToast) {
+                        window.showToast('فشل النسخ', 'error');
+                    }
+                });
+            };
+
+            console.log('✅ Terms page loaded');
+        });
+    </script>
+</body>
+</html>

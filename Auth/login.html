@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - متجرنا</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --success: #6bcb77;
+            --error: #ff4757;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+
+        .bg-animation .blob:nth-child(1) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px; left: -150px;
+        }
+        .bg-animation .blob:nth-child(2) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px; right: -200px;
+            animation-delay: -7s;
+        }
+        .bg-animation .blob:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -14s;
+        }
+        .bg-animation .blob:nth-child(4) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 10%; right: 20%;
+            animation-delay: -4s;
+        }
+        .bg-animation .blob:nth-child(5) {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #ffd93d, transparent 70%);
+            bottom: 10%; left: 10%;
+            animation-delay: -11s;
+            opacity: 0.25;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -50px) scale(1.15); }
+            50% { transform: translate(-40px, 40px) scale(0.9); }
+            75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.05);
+            font-size: 40px;
+            animation: floatIcon 7s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .floating-icon:nth-child(1) { top: 12%; left: 8%; }
+        .floating-icon:nth-child(2) { top: 75%; left: 6%; animation-delay: -1.5s; }
+        .floating-icon:nth-child(3) { top: 18%; right: 10%; animation-delay: -3s; }
+        .floating-icon:nth-child(4) { top: 80%; right: 12%; animation-delay: -4.5s; }
+        .floating-icon:nth-child(5) { top: 48%; left: 4%; animation-delay: -2s; font-size: 28px; }
+        .floating-icon:nth-child(6) { top: 55%; right: 5%; animation-delay: -5s; font-size: 32px; }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            max-width: 460px;
+            animation: loginEnter 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes loginEnter {
+            0% { opacity: 0; transform: scale(0.9) translateY(40px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 45px 40px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.06), transparent, rgba(108, 92, 231, 0.06), transparent);
+            animation: rotateGlow 12s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: 0.35s;
+            z-index: 2;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, var(--primary), #ee5a24);
+            color: white;
+            transform: scale(1.1) rotate(-8deg);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-logo {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: logoPulse 2.5s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 107, 107, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(255, 107, 107, 0.8); }
+        }
+
+        .login-logo i {
+            font-size: 38px;
+            color: white;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 5s ease infinite;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .login-form {
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            transition: 0.4s;
+            overflow: hidden;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .input-wrapper .input-icon {
+            padding: 0 16px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 16px;
+            transition: 0.35s;
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 0;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .toggle-password {
+            padding: 0 16px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.35s;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: 0.35s;
+            user-select: none;
+        }
+
+        .remember-me:hover { color: rgba(255, 255, 255, 0.9); }
+
+        .remember-me input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            transition: 0.35s;
+            background: transparent;
+        }
+
+        .remember-me input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, var(--primary), #ee5a24);
+            border-color: var(--primary);
+        }
+
+        .remember-me input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+        }
+
+        .forgot-password {
+            font-size: 14px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: 0.35s;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .forgot-password::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1.5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.35s ease;
+        }
+
+        .forgot-password:hover::after { width: 100%; }
+        .forgot-password:hover { color: var(--secondary); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.35s;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .submit-btn:hover::after { left: 100%; }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+            margin-top: 25px;
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.35s;
+            margin-right: 5px;
+        }
+
+        .register-link a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .spinner.active { display: inline-block; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .fade-in-item {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        .fade-in-item:nth-child(1) { animation-delay: 0.2s; }
+        .fade-in-item:nth-child(2) { animation-delay: 0.3s; }
+        .fade-in-item:nth-child(3) { animation-delay: 0.4s; }
+        .fade-in-item:nth-child(4) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 500px) {
+            .login-card { padding: 35px 25px 30px; border-radius: 24px; }
+            .login-logo { width: 70px; height: 70px; }
+            .login-logo i { font-size: 32px; }
+            .login-title { font-size: 24px; }
+            .input-wrapper input { padding: 13px 0; font-size: 14px; }
+            .submit-btn { padding: 14px; font-size: 16px; }
+            .back-btn { width: 36px; height: 36px; font-size: 14px; }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <i class="fas fa-shopping-bag floating-icon"></i>
+    <i class="fas fa-tags floating-icon"></i>
+    <i class="fas fa-cart-plus floating-icon"></i>
+    <i class="fas fa-gift floating-icon"></i>
+    <i class="fas fa-star floating-icon"></i>
+    <i class="fas fa-heart floating-icon"></i>
+
+    <div class="login-container">
+        <div class="login-card">
+            <a href="javascript:void(0)" class="back-btn" title="العودة" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h1 class="login-title">تسجيل الدخول</h1>
+                <p class="login-subtitle">أهلاً بعودتك! ادخل بياناتك للمتابعة</p>
+            </div>
+
+            <form class="login-form" id="loginForm" novalidate>
+
+                <div class="input-group fade-in-item">
+                    <label for="email">البريد الإلكتروني</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" name="email" placeholder="example@email.com" autocomplete="email" required>
+                    </div>
+                </div>
+
+                <div class="input-group fade-in-item">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                        <button type="button" class="toggle-password" id="togglePassword" title="إظهار/إخفاء">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="options-row fade-in-item">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>تذكرني</span>
+                    </label>
+                    <a href="forgot-password.html" class="forgot-password">نسيت كلمة المرور؟</a>
+                </div>
+
+                <button type="submit" class="submit-btn fade-in-item" id="submitBtn">
+                    <span class="spinner" id="spinner"></span>
+                    <i class="fas fa-sign-in-alt" id="submitIcon"></i>
+                    <span id="submitText">تسجيل الدخول</span>
+                </button>
+
+            </form>
+
+            <p class="register-link">
+                ليس لديك حساب؟
+                <a href="register.html">سجّل الآن</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+
+    <script>
+        (function() {
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
+            }
+
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const togglePasswordBtn = document.getElementById('togglePassword');
+            const rememberMe = document.getElementById('rememberMe');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+            const spinner = document.getElementById('spinner');
+
+            window.goBack = function() {
+                const referrer = document.referrer;
+
+                const protectedPages = ['profile.html', 'checkout.html', 'orders.html'];
+                if (referrer && protectedPages.some(p => referrer.includes(p))) {
+                    window.location.href = '../index.html';
+                    return;
+                }
+
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = '../Pages/splash.html';
+                }
+            };
+
+            togglePasswordBtn.addEventListener('click', function() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                this.querySelector('i').className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            });
+
+            function setLoading(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    spinner.classList.add('active');
+                    submitIcon.style.display = 'none';
+                    submitText.textContent = 'جاري التحقق...';
+                } else {
+                    submitBtn.disabled = false;
+                    spinner.classList.remove('active');
+                    submitIcon.style.display = 'inline-block';
+                    submitText.textContent = 'تسجيل الدخول';
+                }
+            }
+
+            function validateForm(email, password) {
+                if (!email || email.trim() === '') {
+                    window.showToast('❌ من فضلك اكتب البريد الإلكتروني', 'error');
+                    emailInput.focus();
+                    return false;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    window.showToast('❌ صيغة البريد الإلكتروني غير صحيحة', 'error');
+                    emailInput.focus();
+                    return false;
+                }
+
+                if (!password || password.trim() === '') {
+                    window.showToast('❌ من فضلك اكتب كلمة المرور', 'error');
+                    passwordInput.focus();
+                    return false;
+                }
+
+                if (password.length < 6) {
+                    window.showToast('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                    passwordInput.focus();
+                    return false;
+                }
+
+                return true;
+            }
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+
+                if (!validateForm(email, password)) return;
+
+                setLoading(true);
+
+                try {
+                    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                    if (authError) {
+                        if (authError.message.includes('Invalid login credentials')) {
+                            throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+                        } else if (authError.message.includes('Email not confirmed')) {
+                            throw new Error('من فضلك أكّد بريدك الإلكتروني أولاً');
+                        } else if (authError.message.includes('Too many requests')) {
+                            throw new Error('محاولات كثيرة، انتظر شوية وحاول تاني');
+                        } else {
+                            throw new Error(authError.message);
+                        }
+                    }
+
+                    console.log('✅ Auth Success:', authData.user.email);
+
+                    const { data: customer, error: customerError } = await supabase
+                        .from('Customers')
+                        .select('Name, Email, Phone, City')
+                        .eq('id', authData.user.id)
+                        .single();
+
+                    if (customerError) {
+                        console.warn('⚠️ مشكلة في جلب البيانات:', customerError.message);
+                    }
+
+                    const customerName = customer?.Name || authData.user.email;
+
+                    if (rememberMe.checked) {
+                        localStorage.setItem('rememberMe', 'true');
+                        localStorage.setItem('userEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberMe');
+                        localStorage.removeItem('userEmail');
+                    }
+
+                    setLoading(false);
+                    window.showToast(`✅ أهلاً بعودتك، ${customerName}!`, 'success');
+
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1200);
+
+                } catch (error) {
+                    console.error('❌ خطأ:', error);
+                    setLoading(false);
+                    window.showToast('❌ ' + error.message, 'error');
+                }
+            });
+
+            function prefillEmailIfRemembered() {
+                try {
+                    if (localStorage.getItem('rememberMe') === 'true') {
+                        const savedEmail = localStorage.getItem('userEmail');
+                        if (savedEmail) {
+                            emailInput.value = savedEmail;
+                            rememberMe.checked = true;
+                        }
+                    }
+                } catch (err) {
+                    console.warn('⚠️ لا يمكن قراءة البيانات المحفوظة');
+                }
+            }
+
+            prefillEmailIfRemembered();
+
+            console.log('%c🔐 Login page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+
+        })();
+    </script>
+
+</body>
+</html>

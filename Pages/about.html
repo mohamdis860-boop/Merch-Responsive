@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تعرف على متجرنا - من نحن، رسالتنا، رؤيتنا، وقيمنا">
+    <title>تعرف علينا - متجرنا</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --success: #6bcb77;
+            --error: #ff4757;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-strong: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+            --radius-lg: 20px;
+            --transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        .bg-animation {
+            position: fixed; inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+        .bg-animation .blob:nth-child(1) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px; left: -150px;
+        }
+        .bg-animation .blob:nth-child(2) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px; right: -200px;
+            animation-delay: -7s;
+        }
+        .bg-animation .blob:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -14s;
+        }
+        .bg-animation .blob:nth-child(4) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 10%; right: 20%;
+            animation-delay: -4s;
+        }
+        .bg-animation .blob:nth-child(5) {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #ffd93d, transparent 70%);
+            bottom: 10%; left: 10%;
+            animation-delay: -11s;
+            opacity: 0.2;
+        }
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25%      { transform: translate(60px, -50px) scale(1.15); }
+            50%      { transform: translate(-40px, 40px) scale(0.9); }
+            75%      { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 30px 60px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-bottom: 30px;
+        }
+        .back-btn:hover { color: var(--primary); transform: translateX(6px); }
+        .back-btn i { transition: var(--transition); }
+        .back-btn:hover i { transform: translateX(4px); }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .page-header .icon-big {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+            animation: iconBounce 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5));
+        }
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-12px) scale(1.08); }
+        }
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 6s ease infinite;
+        }
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+        .page-header p { font-size: 18px; color: var(--text-muted); }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px 20px;
+            text-align: center;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+            animation: statFadeIn 0.6s ease both;
+        }
+        @keyframes statFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card:nth-child(1) { --stat-color: var(--primary); }
+        .stat-card:nth-child(2) { --stat-color: var(--accent); }
+        .stat-card:nth-child(3) { --stat-color: var(--secondary); }
+        .stat-card:nth-child(4) { --stat-color: var(--accent2); }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, var(--stat-color, var(--primary)) 0%, transparent 70%);
+            opacity: 0.06;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .stat-card:hover::before { opacity: 0.15; }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: var(--glass-strong);
+            border-color: var(--stat-color, var(--primary));
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 32px;
+            color: var(--stat-color, var(--primary));
+            margin-bottom: 10px;
+            display: inline-block;
+            transition: var(--transition);
+            filter: drop-shadow(0 0 10px var(--stat-color, var(--primary)));
+        }
+        .stat-card:hover .stat-icon {
+            transform: scale(1.2) rotate(-8deg);
+        }
+
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--secondary);
+            text-shadow: 0 0 15px rgba(255, 217, 61, 0.3);
+            margin-bottom: 4px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-number.skeleton-text {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 6px;
+            color: transparent !important;
+            width: 60%;
+            margin: 0 auto 4px;
+        }
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .stat-stars {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            font-size: 11px;
+            color: var(--secondary);
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .about-text h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .about-text h2 i { color: var(--primary); }
+
+        .about-text p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+        .about-text .highlight { color: var(--primary); font-weight: 700; }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: padding 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+        }
+        .feature-list li:hover {
+            color: #fff;
+            border-bottom-color: rgba(255, 107, 107, 0.3);
+        }
+        .feature-list li i {
+            color: var(--primary);
+            font-size: 18px;
+            width: 30px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .feature-list li:hover i {
+            transform: scale(1.3) rotate(10deg);
+            color: var(--secondary);
+        }
+
+        .about-cards .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-cards .card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.06), transparent, rgba(108, 92, 231, 0.06), transparent);
+            animation: rotateGlow 12s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .about-cards .card:hover::before { opacity: 1; }
+        @keyframes rotateGlow { to { transform: rotate(360deg); } }
+
+        .about-cards .card:hover {
+            background: var(--glass-strong);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 107, 107, 0.3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 107, 107, 0.1);
+            z-index: 1;
+        }
+        .about-cards .card:last-child { margin-bottom: 0; }
+
+        .about-cards .card .card-icon {
+            font-size: 35px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: inline-block;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.4));
+        }
+        .about-cards .card:hover .card-icon {
+            transform: scale(1.2) rotate(8deg);
+            color: var(--secondary);
+        }
+
+        .about-cards .card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .about-cards .card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section {
+            margin-top: 60px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(108, 92, 231, 0.1));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 107, 107, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #00cec9);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 4s ease infinite;
+            position: relative;
+        }
+        .cta-section p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .cta-btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .cta-btn.primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 14px 40px rgba(255, 107, 107, 0.6);
+        }
+        .cta-btn.secondary {
+            background: var(--glass-strong);
+            color: white;
+            border: 1px solid var(--border);
+        }
+        .cta-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .share-page-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(108, 92, 231, 0.4);
+            transition: var(--transition);
+        }
+        .share-page-btn:hover { transform: translateY(-4px) scale(1.05); }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent3));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-to-top:hover { transform: translateY(-4px) scale(1.05); }
+
+        .offline-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .offline-banner.show { transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 30px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .main-content { padding: 30px 15px; }
+            .cta-section { padding: 40px 20px; }
+            .cta-section h2 { font-size: 24px; }
+        }
+        @media (max-width: 500px) {
+            .page-header h1 { font-size: 24px; }
+            .page-header .icon-big { font-size: 40px; }
+            .stat-card .stat-number { font-size: 26px; }
+            .cta-btn { width: 100%; justify-content: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <div class="offline-banner" id="offlineBanner">
+        <i class="fas fa-wifi"></i> أنت غير متصل بالإنترنت
+    </div>
+
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <div class="main-content">
+
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للرئيسية
+        </a>
+
+        <div class="page-header">
+            <i class="fas fa-store-alt icon-big" aria-hidden="true"></i>
+            <h1>تعرف علينا</h1>
+            <p>نحن هنا لنقدم لك أفضل تجربة تسوق</p>
+        </div>
+
+        <div class="stats-row" id="statsRow">
+            <div class="stat-card">
+                <i class="fas fa-box stat-icon" aria-hidden="true"></i>
+                <div class="stat-number skeleton-text" id="statProducts" aria-live="polite">—</div>
+                <div class="stat-label">منتج متاح</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tags stat-icon" aria-hidden="true"></i>
+                <div class="stat-number skeleton-text" id="statCategories" aria-live="polite">—</div>
+                <div class="stat-label">تصنيف</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star stat-icon" aria-hidden="true"></i>
+                <div class="stat-number skeleton-text" id="statRating" aria-live="polite">—</div>
+                <div class="stat-label">تقييم العملاء</div>
+                <div class="stat-stars" id="ratingStars" aria-hidden="true"></div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shipping-fast stat-icon" aria-hidden="true"></i>
+                <div class="stat-number">24h</div>
+                <div class="stat-label">توصيل سريع</div>
+            </div>
+        </div>
+
+        <div class="about-grid">
+
+            <div class="about-text">
+                <h2>
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    من نحن؟
+                </h2>
+                <p>
+                    <span class="highlight">متجرنا</span> هو منصة تسوق إلكترونية متكاملة تهدف إلى توفير
+                    أفضل المنتجات بأعلى جودة وبأسعار تنافسية. نؤمن بأن <span class="highlight">العميل</span>
+                    هو محور اهتمامنا، لذلك نسعى دائماً لتقديم تجربة تسوق فريدة وسلسة.
+                </p>
+                <p>
+                    تأسسنا في <span class="highlight">2024</span> برؤية واضحة: <span class="highlight">تغيير</span>
+                    طريقة التسوق عبر الإنترنت في الشرق الأوسط، من خلال توفير منتجات أصلية،
+                    توصيل سريع، وخدمة عملاء استثنائية.
+                </p>
+
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> منتجات أصلية 100% مضمونة</li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> توصيل مجاني وسريع لجميع المحافظات</li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> دعم فني 24/7 لخدمتك</li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> أسعار تنافسية لا تُقهر</li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> نظام دفع آمن ومتنوع</li>
+                </ul>
+            </div>
+
+            <div class="about-cards">
+                <div class="card">
+                    <i class="fas fa-bullseye card-icon" aria-hidden="true"></i>
+                    <h3>رسالتنا</h3>
+                    <p>
+                        تقديم تجربة تسوق استثنائية تجمع بين الجودة العالية، الأسعار المنافسة،
+                        والخدمة الاحترافية التي تضع العميل في المقام الأول.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <i class="fas fa-eye card-icon" aria-hidden="true"></i>
+                    <h3>رؤيتنا</h3>
+                    <p>
+                        أن نكون الوجهة الأولى للتسوق الإلكتروني في العالم العربي،
+                        وأن نساهم في نمو الاقتصاد الرقمي وتطوير حلول تسوق مبتكرة.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <i class="fas fa-gem card-icon" aria-hidden="true"></i>
+                    <h3>قيمنا</h3>
+                    <p>
+                        <strong>الصدق:</strong> في كل ما نقدمه.<br>
+                        <strong>الجودة:</strong> أساس اختيار منتجاتنا.<br>
+                        <strong>الشفافية:</strong> في تعاملاتنا مع العملاء.<br>
+                        <strong>الابتكار:</strong> في تقديم حلول جديدة.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="cta-section">
+            <h2>جاهز تبدأ التسوق؟</h2>
+            <p>اكتشف آلاف المنتجات بأسعار تنافسية وتوصيل سريع</p>
+            <div class="cta-buttons">
+                <a href="products.html" class="cta-btn primary">
+                    <i class="fas fa-shopping-bag"></i> تسوق الآن
+                </a>
+                <a href="contact.html" class="cta-btn secondary">
+                    <i class="fas fa-envelope"></i> تواصل معنا
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <button class="share-page-btn" id="sharePageBtn" aria-label="مشاركة الصفحة">
+        <i class="fas fa-share-alt"></i>
+    </button>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const STATS_CACHE_KEY = 'about_stats_v1';
+            const STATS_CACHE_TTL = 5 * 60 * 1000; 
+            const COUNT_UP_DURATION = 1500;   
+
+            const supabase       = window.getSupabase();
+            const statProducts   = document.getElementById('statProducts');
+            const statCategories = document.getElementById('statCategories');
+            const statRating     = document.getElementById('statRating');
+            const ratingStars    = document.getElementById('ratingStars');
+            const backToTop      = document.getElementById('backToTop');
+            const sharePageBtn   = document.getElementById('sharePageBtn');
+            const offlineBanner  = document.getElementById('offlineBanner');
+
+            const formatNumber = (n) => new Intl.NumberFormat('ar-EG').format(n);
+
+            function animateCount(el, target, duration = COUNT_UP_DURATION) {
+                const start = 0;
+                const startTime = performance.now();
+                const isDecimal = String(target).includes('.');
+                const finalValue = parseFloat(target) || 0;
+
+                function tick(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const current = start + (finalValue - start) * eased;
+
+                    el.textContent = isDecimal
+                        ? current.toFixed(1)
+                        : formatNumber(Math.round(current));
+
+                    if (progress < 1) requestAnimationFrame(tick);
+                    else {
+                        el.textContent = isDecimal
+                            ? finalValue.toFixed(1)
+                            : formatNumber(finalValue);
+                    }
+                }
+                requestAnimationFrame(tick);
+            }
+
+            function renderStars(rating) {
+                if (!ratingStars) return;
+                const r = parseFloat(rating) || 0;
+                const full  = Math.floor(r);
+                const half  = r - full >= 0.5 ? 1 : 0;
+                const empty = 5 - full - half;
+                let html = '';
+                for (let i = 0; i < full;  i++) html += '<i class="fas fa-star"></i>';
+                if (half) html += '<i class="fas fa-star-half-alt"></i>';
+                for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+                ratingStars.innerHTML = html;
+            }
+
+            function readCache() {
+                try {
+                    const raw = sessionStorage.getItem(STATS_CACHE_KEY);
+                    if (!raw) return null;
+                    const parsed = JSON.parse(raw);
+                    if (Date.now() - parsed.ts > STATS_CACHE_TTL) return null;
+                    return parsed.data;
+                } catch (e) { return null; }
+            }
+            function writeCache(data) {
+                try {
+                    sessionStorage.setItem(STATS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data }));
+                } catch (e) { /* ignore */ }
+            }
+
+            function setStat(el, value, isDecimal = false) {
+                el.classList.remove('skeleton-text');
+                animateCount(el, value);
+            }
+
+            function renderStats(data) {
+                setStat(statProducts,   data.productsCount || 0);
+                setStat(statCategories, data.categoriesCount || 0);
+                setStat(statRating,     data.avgRating || '0.0');
+                renderStars(data.avgRating || 0);
+            }
+
+            function showStatsError() {
+                [statProducts, statCategories, statRating].forEach(el => {
+                    el.classList.remove('skeleton-text');
+                    el.textContent = '—';
+                });
+                ratingStars.innerHTML = '';
+                window.showToast?.('⚠️ تعذر تحميل الإحصائيات', 'error');
+            }
+
+            async function loadStats() {
+                if (!supabase) {
+                    showStatsError();
+                    return;
+                }
+
+                const cached = readCache();
+                if (cached) {
+                    renderStats(cached);
+                    return;
+                }
+
+                try {
+                    const [prodRes, catRes, ratingRes] = await Promise.all([
+                        supabase.from('Product').select('*', { count: 'exact', head: true }),
+                        supabase.from('Category').select('*', { count: 'exact', head: true }),
+                        supabase.from('Product').select('Rating').not('Rating', 'is', null)
+                    ]);
+
+                    const productsCount   = prodRes.count   || 0;
+                    const categoriesCount = catRes.count    || 0;
+                    const ratings         = ratingRes.data  || [];
+
+                    const avgRating = ratings.length > 0
+                        ? (ratings.reduce((sum, p) => sum + (parseFloat(p.Rating) || 0), 0) / ratings.length).toFixed(1)
+                        : '0.0';
+
+                    const data = { productsCount, categoriesCount, avgRating };
+                    writeCache(data);
+                    renderStats(data);
+
+                } catch (err) {
+                    console.warn('⚠️ Could not load stats:', err);
+                    showStatsError();
+                }
+            }
+
+            async function sharePage() {
+                const data = {
+                    title: document.title,
+                    text: 'تعرف على متجرنا - أفضل تجربة تسوق',
+                    url: window.location.href
+                };
+                try {
+                    if (navigator.share) {
+                        await navigator.share(data);
+                    } else if (navigator.clipboard) {
+                        await navigator.clipboard.writeText(window.location.href);
+                        window.showToast?.('✅ تم نسخ رابط الصفحة', 'success');
+                    }
+                } catch (e) { /* user cancelled */ }
+            }
+            sharePageBtn.addEventListener('click', sharePage);
+
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 400);
+            }, { passive: true });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            function updateOnlineStatus() {
+                offlineBanner.classList.toggle('show', !navigator.onLine);
+            }
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
+            loadStats();
+
+        })();
+    </script>
+
+</body>
+</html>

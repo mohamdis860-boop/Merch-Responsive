@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية | متجرنا</title>
+    <meta name="description" content="سياسة الخصوصية — كيف نجمع ونستخدم ونحمي بياناتك الشخصية.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .privacy-hero {
+            padding: 70px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .privacy-hero .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(108, 92, 231, 0.12);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 50px;
+            color: #a29bfe;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-hero .meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-hero .meta i {
+            color: #a29bfe;
+        }
+
+        .privacy-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px 80px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toc {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px 20px;
+            backdrop-filter: blur(10px);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .toc::-webkit-scrollbar { width: 4px; }
+        .toc::-webkit-scrollbar-thumb {
+            background: rgba(108, 92, 231, 0.4);
+            border-radius: 4px;
+        }
+
+        .toc h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .toc h3 i { color: #a29bfe; }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc ul li { margin-bottom: 4px; }
+
+        .toc ul li a {
+            display: block;
+            padding: 8px 12px;
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.25s;
+            border-right: 2px solid transparent;
+        }
+
+        .toc ul li a:hover {
+            color: #fff;
+            background: rgba(108, 92, 231, 0.1);
+            border-right-color: #6c5ce7;
+            padding-right: 16px;
+        }
+
+        .toc ul li a.active {
+            color: #a29bfe;
+            background: rgba(108, 92, 231, 0.15);
+            border-right-color: #6c5ce7;
+        }
+
+        .privacy-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 50px 45px;
+            backdrop-filter: blur(10px);
+        }
+
+        .privacy-content > p.intro {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(108, 92, 231, 0.08);
+            border-right: 3px solid #6c5ce7;
+            border-radius: 10px;
+        }
+
+        .privacy-section {
+            padding-top: 24px;
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+
+        .privacy-section h2 {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .privacy-section h2 .num {
+            display: inline-grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.35);
+        }
+
+        .privacy-section p,
+        .privacy-section li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .privacy-section ul {
+            padding-right: 24px;
+            margin-bottom: 16px;
+        }
+
+        .privacy-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .privacy-section ul li::marker {
+            color: #a29bfe;
+        }
+
+        .privacy-section strong {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .privacy-section a {
+            color: #a29bfe;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .privacy-section a:hover {
+            text-decoration: underline;
+        }
+
+        .notice {
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(0, 206, 201, 0.08);
+            border-right: 3px solid #00cec9;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .notice i {
+            color: #00cec9;
+            font-size: 1.1rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .notice.warn {
+            background: rgba(255, 217, 61, 0.08);
+            border-right-color: #ffd93d;
+        }
+
+        .notice.warn i { color: #ffd93d; }
+
+        .privacy-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background: rgba(108, 92, 231, 0.12);
+            border-color: rgba(108, 92, 231, 0.4);
+            color: #a29bfe;
+            transform: translateY(-2px);
+        }
+
+        .btn-action.primary {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-action.primary:hover {
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.5);
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .privacy-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 20px 60px;
+            }
+
+            .toc {
+                position: static;
+                max-height: none;
+            }
+
+            .privacy-content {
+                padding: 30px 22px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .privacy-hero {
+                padding: 50px 20px 30px;
+            }
+
+            .privacy-section h2 {
+                font-size: 1.15rem;
+            }
+
+            .privacy-section h2 .num {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+
+            .privacy-actions {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <section class="privacy-hero">
+        <span class="badge" data-aos="fade-down">
+            <i class="fas fa-shield-alt"></i>
+            خصوصيتك تهمنا
+        </span>
+        <h1 data-aos="fade-up" data-aos-delay="100">سياسة الخصوصية</h1>
+        <div class="meta" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-clock"></i>
+            آخر تحديث: <span id="lastUpdate">—</span>
+        </div>
+    </section>
+
+    <div class="privacy-layout">
+
+        <aside class="toc" data-aos="fade-left">
+            <h3><i class="fas fa-list-ul"></i> فهرس المحتوى</h3>
+            <ul id="tocList">
+                <li><a href="#s1">1. مقدمة</a></li>
+                <li><a href="#s2">2. المعلومات التي نجمعها</a></li>
+                <li><a href="#s3">3. كيف نستخدم معلوماتك</a></li>
+                <li><a href="#s4">4. ملفات تعريف الارتباط</a></li>
+                <li><a href="#s5">5. مشاركة المعلومات</a></li>
+                <li><a href="#s6">6. أمان البيانات</a></li>
+                <li><a href="#s7">7. حقوقك</a></li>
+                <li><a href="#s8">8. الاحتفاظ بالبيانات</a></li>
+                <li><a href="#s9">9. خصوصية الأطفال</a></li>
+                <li><a href="#s10">10. التعديلات</a></li>
+                <li><a href="#s11">11. التواصل</a></li>
+            </ul>
+        </aside>
+
+        <main class="privacy-content" data-aos="fade-up">
+
+            <p class="intro">
+                في <strong>متجرنا</strong>، خصوصيتك أولوية. هذه السياسة توضح نوع البيانات التي
+                نجمعها، وكيف نستخدمها ونحميها. باستخدامك للموقع، فأنت توافق على هذه السياسة.
+            </p>
+
+            <section class="privacy-section" id="s1">
+                <h2><span class="num">1</span> مقدمة</h2>
+                <p>
+                    نحن في <strong>متجرنا</strong> نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية.
+                    توضح هذه السياسة كيفية جمعنا واستخدامنا وحمايتنا للمعلومات التي تقدمها لنا
+                    عند استخدام موقعنا أو خدماتنا.
+                </p>
+                <p>
+                    يرجى قراءة هذه السياسة بعناية. إذا كنت لا توافق على أي جزء منها، يرجى
+                    التوقف عن استخدام الموقع.
+                </p>
+            </section>
+
+            <section class="privacy-section" id="s2">
+                <h2><span class="num">2</span> المعلومات التي نجمعها</h2>
+                <p>نجمع نوعين من المعلومات:</p>
+
+                <p><strong>أ) معلومات تقدمها بنفسك:</strong></p>
+                <ul>
+                    <li>الاسم الكامل.</li>
+                    <li>البريد الإلكتروني.</li>
+                    <li>رقم الهاتف.</li>
+                    <li>عنوان التوصيل.</li>
+                    <li>بيانات الحساب (كلمة المرور مشفرة).</li>
+                </ul>
+
+                <p><strong>ب) معلومات تُجمع تلقائياً:</strong></p>
+                <ul>
+                    <li>عنوان IP.</li>
+                    <li>نوع المتصفح ونظام التشغيل.</li>
+                    <li>الصفحات التي تزورها ومدة الزيارة.</li>
+                    <li>المنتجات التي تشاهدها.</li>
+                </ul>
+            </section>
+
+            <section class="privacy-section" id="s3">
+                <h2><span class="num">3</span> كيف نستخدم معلوماتك</h2>
+                <p>نستخدم بياناتك للأغراض التالية:</p>
+                <ul>
+                    <li>معالجة وتنفيذ طلباتك.</li>
+                    <li>التواصل معك بخصوص الطلبات والحساب.</li>
+                    <li>تحسين تجربتك على الموقع.</li>
+                    <li>إرسال عروض وتخفيضات (لو وافقت).</li>
+                    <li>منع الاحتيال وحماية الموقع.</li>
+                    <li>الامتثال للمتطلبات القانونية.</li>
+                </ul>
+                <div class="notice">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        لن نستخدم بياناتك لأي غرض لم توافق عليه بشكل صريح.
+                    </div>
+                </div>
+            </section>
+
+            <section class="privacy-section" id="s4">
+                <h2><span class="num">4</span> ملفات تعريف الارتباط (Cookies)</h2>
+                <p>
+                    نستخدم ملفات تعريف الارتباط لتحسين تجربتك. هذه الملفات صغيرة تُخزَّن على
+                    جهازك وتساعدنا في:
+                </p>
+                <ul>
+                    <li>تذكر تسجيل دخولك.</li>
+                    <li>حفظ سلة التسوق والمفضلة.</li>
+                    <li>تحليل استخدام الموقع.</li>
+                </ul>
+                <p>
+                    يمكنك تعطيل ملفات تعريف الارتباط من إعدادات المتصفح، لكن ذلك قد يؤثر على
+                    بعض الوظائف.
+                </p>
+                <div class="notice warn">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        تعطيل الـ Cookies قد يمنع السلة والمفضلة من العمل بشكل صحيح.
+                    </div>
+                </div>
+            </section>
+
+            <section class="privacy-section" id="s5">
+                <h2><span class="num">5</span> مشاركة المعلومات</h2>
+                <p>
+                    <strong>لا نبيع بياناتك لأي طرف ثالث.</strong>
+                    قد نشارك بياناتك فقط مع:
+                </p>
+                <ul>
+                    <li><strong>شركات الشحن:</strong> لتوصيل طلباتك.</li>
+                    <li><strong>بوابات الدفع:</strong> لإتمام عمليات الدفع.</li>
+                    <li><strong>مقدمي الخدمات التقنية:</strong> مثل Supabase للاستضافة.</li>
+                    <li><strong>الجهات القانونية:</strong> عند الطلب الرسمي.</li>
+                </ul>
+            </section>
+
+            <section class="privacy-section" id="s6">
+                <h2><span class="num">6</span> أمان البيانات</h2>
+                <p>
+                    نتخذ إجراءات أمنية قوية لحماية بياناتك، بما في ذلك:
+                </p>
+                <ul>
+                    <li>تشفير الاتصال بـ SSL/HTTPS.</li>
+                    <li>تشفير كلمات المرور.</li>
+                    <li>الوصول المحدود للبيانات من قبل الموظفين.</li>
+                    <li>النسخ الاحتياطي الدوري.</li>
+                </ul>
+                <div class="notice">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        على الرغم من جهودنا، لا يوجد نظام آمن 100%. استخدم كلمة مرور قوية
+                        ولا تشاركها مع أحد.
+                    </div>
+                </div>
+            </section>
+
+            <section class="privacy-section" id="s7">
+                <h2><span class="num">7</span> حقوقك</h2>
+                <p>لديك الحق في:</p>
+                <ul>
+                    <li><strong>الوصول:</strong> طلب نسخة من بياناتك.</li>
+                    <li><strong>التصحيح:</strong> تعديل بياناتك الخاطئة.</li>
+                    <li><strong>الحذف:</strong> طلب حذف حسابك وبياناتك.</li>
+                    <li><strong>الاعتراض:</strong> رفض استخدام بياناتك لأغراض تسويقية.</li>
+                    <li><strong>نقل البيانات:</strong> الحصول على بياناتك بصيغة قابلة للنقل.</li>
+                </ul>
+                <p>
+                    لممارسة أي من هذه الحقوق، تواصل معنا من
+                    <a href="../Pages/contact.html">صفحة التواصل</a>.
+                </p>
+            </section>
+
+            <section class="privacy-section" id="s8">
+                <h2><span class="num">8</span> الاحتفاظ بالبيانات</h2>
+                <p>
+                    نحتفظ ببياناتك طالما كان حسابك نشطاً. عند حذف الحساب، نحذف بياناتك الشخصية
+                    في خلال <strong>30 يوماً</strong>، ما لم يكن هناك التزام قانوني بالاحتفاظ بها.
+                </p>
+            </section>
+
+            <section class="privacy-section" id="s9">
+                <h2><span class="num">9</span> خصوصية الأطفال</h2>
+                <p>
+                    موقعنا غير موجه للأطفال تحت سن <strong>13 عاماً</strong>. لا نجمع بيانات
+                    عن قصد من الأطفال. إذا اكتشفنا أن طفلاً قدم بيانات، سنحذفها فوراً.
+                </p>
+                <p>
+                    إذا كنت ولي أمر وتعتقد أن طفلك قدم بيانات، يرجى التواصل معنا.
+                </p>
+            </section>
+
+            <section class="privacy-section" id="s10">
+                <h2><span class="num">10</span> التعديلات على السياسة</h2>
+                <p>
+                    قد نحدّث هذه السياسة من وقت لآخر. سيتم نشر أي تعديلات على هذه الصفحة مع
+                    تحديث تاريخ "آخر تحديث".
+                </p>
+                <p>
+                    استمرارك في استخدام الموقع بعد نشر التعديلات يُعد موافقة ضمنية عليها.
+                </p>
+            </section>
+
+            <section class="privacy-section" id="s11">
+                <h2><span class="num">11</span> التواصل معنا</h2>
+                <p>لو عندك أي سؤال بخصوص سياسة الخصوصية، تقدر تتواصل معنا من خلال:</p>
+                <ul>
+                    <li>📧 الإيميل: <a href="mailto:mohamdis860@gmail.com">mohamdis860@gmail.com</a></li>
+                    <li>📱 التليفون: <a href="tel:01026106479" dir="ltr">0102 610 6479</a></li>
+                    <li>📍 العنوان: فيصل، الجيزة</li>
+                    <li>🕐 ساعات العمل: يومياً — 12 ساعة</li>
+                </ul>
+            </section>
+
+            <div class="privacy-actions">
+                <button class="btn-action primary" onclick="window.print()">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
+                <button class="btn-action" onclick="copyLink()">
+                    <i class="fas fa-link"></i> نسخ الرابط
+                </button>
+                <a href="terms.html" class="btn-action">
+                    <i class="fas fa-file-contract"></i> الشروط والأحكام
+                </a>
+                <a href="../Pages/contact.html" class="btn-action">
+                    <i class="fas fa-paper-plane"></i> تواصل معنا
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            const lastUpdateEl = document.getElementById('lastUpdate');
+            if (lastUpdateEl) {
+                const d = new Date();
+                const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+                lastUpdateEl.textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+            }
+
+            const tocLinks = document.querySelectorAll('#tocList a');
+            const sections = document.querySelectorAll('.privacy-section');
+
+            function updateActiveToc() {
+                let current = '';
+                const scrollY = window.scrollY + 100;
+
+                sections.forEach(section => {
+                    if (scrollY >= section.offsetTop) {
+                        current = section.id;
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveToc);
+            updateActiveToc();
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            window.copyLink = function() {
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    if (window.showToast) {
+                        window.showToast('تم نسخ الرابط', 'success');
+                    }
+                }).catch(() => {
+                    if (window.showToast) {
+                        window.showToast('فشل النسخ', 'error');
+                    }
+                });
+            };
+
+            console.log('✅ Privacy page loaded');
+        });
+    </script>
+</body>
+</html>

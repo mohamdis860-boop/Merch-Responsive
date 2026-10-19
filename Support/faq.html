@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة الشائعة | متجرنا</title>
+    <meta name="description" content="إجابات على أكثر الأسئلة شيوعاً — الشحن، الدفع، الاسترجاع، والحساب.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .faq-hero {
+            padding: 70px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .faq-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .faq-hero .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 107, 107, 0.12);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 50px;
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0 22px;
+            transition: 0.35s;
+        }
+
+        .faq-search-box:focus-within {
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.25);
+            transform: scale(1.02);
+        }
+
+        .faq-search-box i {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .faq-search-box:focus-within i {
+            color: #ff6b6b;
+        }
+
+        .faq-search-box input {
+            background: transparent;
+            border: none;
+            padding: 15px 14px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            width: 100%;
+            outline: none;
+        }
+
+        .faq-search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .faq-categories {
+            max-width: 900px;
+            margin: 30px auto 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-cat-btn {
+            padding: 9px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-cat-btn:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: rgba(255, 107, 107, 0.4);
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .faq-cat-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.35);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .faq-group {
+            margin-bottom: 40px;
+        }
+
+        .faq-group-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .faq-group-title i {
+            color: #ff6b6b;
+            font-size: 1.1rem;
+        }
+
+        .faq-group-title .count {
+            margin-right: auto;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 600;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            transition: border-color 0.3s, background 0.3s;
+            overflow: hidden;
+        }
+
+        .faq-item[open] {
+            border-color: rgba(255, 107, 107, 0.4);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 800;
+            color: #fff;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .faq-item summary::-webkit-details-marker { display: none; }
+
+        .faq-item summary:hover {
+            color: #ff6b6b;
+        }
+
+        .faq-item summary .q-icon {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .faq-item[open] summary .q-icon {
+            transform: rotate(45deg);
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .faq-item .answer {
+            padding: 0 22px 22px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .faq-item .answer a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .faq-item .answer a:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.4);
+            display: none;
+        }
+
+        .no-results.show { display: block; }
+
+        .no-results i {
+            font-size: 60px;
+            color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .no-results h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .faq-cta {
+            max-width: 700px;
+            margin: 0 auto 80px;
+            padding: 40px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(108, 92, 231, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.05), transparent, rgba(108, 92, 231, 0.05), transparent);
+            animation: rotateGlow 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .faq-cta h3 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-cta p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-cta .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 32px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 15px;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.35);
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-cta .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+        }
+
+        @media (max-width: 640px) {
+            .faq-hero {
+                padding: 50px 20px 30px;
+            }
+
+            .faq-container {
+                padding: 30px 15px 60px;
+            }
+
+            .faq-item summary {
+                padding: 16px 18px;
+                font-size: 0.95rem;
+            }
+
+            .faq-item .answer {
+                padding: 0 18px 18px;
+                font-size: 0.9rem;
+            }
+
+            .faq-cat-btn {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+
+            .faq-cta {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <section class="faq-hero">
+        <span class="badge" data-aos="fade-down">
+            <i class="fas fa-question-circle"></i>
+            مركز المساعدة
+        </span>
+        <h1 data-aos="fade-up" data-aos-delay="100">الأسئلة الشائعة</h1>
+        <p data-aos="fade-up" data-aos-delay="200">
+            إجابات على أكثر الأسئلة شيوعاً — لو مش لاقي إجابتك،
+            <a href="../Pages/contact.html" style="color:#ff6b6b;font-weight:700;">تواصل معنا</a>.
+        </p>
+
+        <div class="faq-search" data-aos="fade-up" data-aos-delay="300">
+            <div class="faq-search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="faqSearchInput" placeholder="ابحث في الأسئلة...">
+            </div>
+        </div>
+
+        <div class="faq-categories" data-aos="fade-up" data-aos-delay="400">
+            <button class="faq-cat-btn active" data-cat="all">
+                <i class="fas fa-th-large"></i> الكل
+            </button>
+            <button class="faq-cat-btn" data-cat="orders">
+                <i class="fas fa-shopping-bag"></i> الطلبات
+            </button>
+            <button class="faq-cat-btn" data-cat="payment">
+                <i class="fas fa-credit-card"></i> الدفع
+            </button>
+            <button class="faq-cat-btn" data-cat="shipping">
+                <i class="fas fa-truck"></i> الشحن
+            </button>
+            <button class="faq-cat-btn" data-cat="returns">
+                <i class="fas fa-undo-alt"></i> الاسترجاع
+            </button>
+            <button class="faq-cat-btn" data-cat="account">
+                <i class="fas fa-user-circle"></i> الحساب
+            </button>
+        </div>
+    </section>
+
+    <div class="faq-container" id="faqContainer">
+
+        <div class="faq-group" data-cat="orders">
+            <h2 class="faq-group-title">
+                <i class="fas fa-shopping-bag"></i>
+                الطلبات
+                <span class="count"></span>
+            </h2>
+
+            <details class="faq-item">
+                <summary>
+                    <span>إزاي أتابع طلبي؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    تقدر تتابع طلبك من صفحة "حسابي" → "طلباتي"، وهتلاقي حالة كل طلب.
+                    كمان هيوصلك إيميل ورسالة تأكيد لما الطلب يخرج للتوصيل.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>أقدر أعدل أو ألغي طلبي؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    أيوه، بس لازم يكون قبل ما الطلب يخرج للشحن. كلمنا على
+                    <a href="tel:01026106479" dir="ltr">0102 610 6479</a>
+                    أو ابعتلنا من صفحة <a href="../Pages/contact.html">تواصل معنا</a>.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>الحد الأدنى للطلب كام؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    مفيش حد أدنى — تقدر تطلب منتج واحد بس، وهيوصلك لحد باب البيت.
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-group" data-cat="payment">
+            <h2 class="faq-group-title">
+                <i class="fas fa-credit-card"></i>
+                الدفع
+                <span class="count"></span>
+            </h2>
+
+            <details class="faq-item">
+                <summary>
+                    <span>إيه طرق الدفع المتاحة؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    بنوفر:
+                    <br>• الدفع عند الاستلام (Cash on Delivery)
+                    <br>• بطاقات الائتمان (Visa / Mastercard)
+                    <br>• المحافظ الإلكترونية (Vodafone Cash / InstaPay)
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>هل الدفع آمن؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    أيوه 100%. كل عمليات الدفع مشفرة، ومفيش أي بيانات بنك بتتخزن عندنا.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>في كوبونات خصم؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    بننزل عروض وكوبونات كل فترة — تابعنا على صفحتنا الرئيسية أو
+                    اشترك في القائمة البريدية عشان توصلك أول بأول.
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-group" data-cat="shipping">
+            <h2 class="faq-group-title">
+                <i class="fas fa-truck"></i>
+                الشحن
+                <span class="count"></span>
+            </h2>
+
+            <details class="faq-item">
+                <summary>
+                    <span>الشحن بياخد قد إيه؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    القاهرة والجيزة: 24-48 ساعة.<br>
+                    باقي المحافظات: 2-5 أيام عمل.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>في شحن مجاني؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    أيوه، الشحن مجاني للطلبات فوق 500 جنيه.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>بتوصلوا لكل المحافظات؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    أيوه، بنوصل لكل محافظات مصر. بس ممكن تكون فيه رسوم إضافية للمناطق النائية.
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-group" data-cat="returns">
+            <h2 class="faq-group-title">
+                <i class="fas fa-undo-alt"></i>
+                الاسترجاع
+                <span class="count"></span>
+            </h2>
+
+            <details class="faq-item">
+                <summary>
+                    <span>أقدر أرجّع منتج؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    أيوه، عندك 14 يوم من تاريخ الاستلام. المنتج لازم يكون بحالته الأصلية
+                    وفي العلبة بتاعته.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>فلوس الاسترجاع بتوصل إمتى؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    بعد ما نستلم المنتج ونراجعه، الفلوس بترجع في خلال 5-7 أيام عمل،
+                    بنفس طريقة الدفع الأصلية.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>مين بيدفع مصاريف الشحن للاسترجاع؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    لو المنتج فيه عيب مصنعي أو وصلك غلط، إحنا بنتحمل مصاريف الشحن.
+                    غير كده، العميل هو اللي بيدفع.
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-group" data-cat="account">
+            <h2 class="faq-group-title">
+                <i class="fas fa-user-circle"></i>
+                الحساب
+                <span class="count"></span>
+            </h2>
+
+            <details class="faq-item">
+                <summary>
+                    <span>إزاي أعمل حساب جديد؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    اضغط على "دخول" في البار فوق، وبعدين اختار "إنشاء حساب جديد".
+                    العملية بتاخد دقيقة واحدة.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>نسيت كلمة السر — أعمل إيه؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    من صفحة الدخول، اضغط "نسيت كلمة السر"، وهنرسلك إيميل فيه
+                    رابط إعادة التعيين.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>
+                    <span>إزاي أعدل بياناتي؟</span>
+                    <span class="q-icon"><i class="fas fa-plus"></i></span>
+                </summary>
+                <div class="answer">
+                    من صفحة "حسابي" → "تعديل البيانات"، تقدر تغير الاسم، الإيميل،
+                    التليفون، والعنوان.
+                </div>
+            </details>
+        </div>
+
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>مفيش نتائج</h3>
+            <p>جرب تدور بكلمة تانية، أو <a href="../Pages/contact.html" style="color:#ff6b6b;">تواصل معنا</a>.</p>
+        </div>
+
+    </div>
+
+    <div class="faq-cta" data-aos="fade-up">
+        <h3>لسه عندك سؤال؟</h3>
+        <p>فريق الدعم جاهز يساعدك على مدار 12 ساعة يومياً</p>
+        <a href="../Pages/contact.html" class="btn">
+            <i class="fas fa-paper-plane"></i>
+            تواصل معنا
+        </a>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            const searchInput = document.getElementById('faqSearchInput');
+            const catButtons  = document.querySelectorAll('.faq-cat-btn');
+            const groups      = document.querySelectorAll('.faq-group');
+            const noResults   = document.getElementById('noResults');
+
+            let activeCat = 'all';
+            let searchTerm = '';
+
+            groups.forEach(group => {
+                const count = group.querySelectorAll('.faq-item').length;
+                const countEl = group.querySelector('.count');
+                if (countEl) countEl.textContent = `${count} سؤال`;
+            });
+
+            function filterFaq() {
+                let visibleGroups = 0;
+
+                groups.forEach(group => {
+                    const groupCat = group.getAttribute('data-cat');
+                    const matchCat = (activeCat === 'all' || activeCat === groupCat);
+
+                    let visibleItems = 0;
+                    const items = group.querySelectorAll('.faq-item');
+
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        const matchSearch = !searchTerm || text.includes(searchTerm);
+
+                        if (matchCat && matchSearch) {
+                            item.style.display = '';
+                            visibleItems++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    if (visibleItems > 0) {
+                        group.style.display = '';
+                        visibleGroups++;
+                    } else {
+                        group.style.display = 'none';
+                    }
+                });
+
+                noResults.classList.toggle('show', visibleGroups === 0);
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchTerm = e.target.value.trim().toLowerCase();
+                    filterFaq();
+                });
+            }
+
+            catButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    catButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeCat = btn.getAttribute('data-cat');
+                    filterFaq();
+                });
+            });
+
+            filterFaq();
+
+            console.log('✅ FAQ page loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+/* Responsive-only refinements for Merch. No application logic is changed. */
+*, *::before, *::after { box-sizing: border-box; }
+html { max-width: 100%; overflow-x: clip; }
+body { max-width: 100%; overflow-x: clip; }
+img, video, canvas, svg, iframe { max-width: 100%; }
+img { height: auto; }
+input, select, textarea, button { max-width: 100%; }
+pre, code { overflow-wrap: anywhere; }
+table { max-width: 100%; }
+
+@media (max-width: 1024px) {
+  .main-content { width: 100%; max-width: 100%; padding-left: 24px; padding-right: 24px; }
+  .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .similar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .footer-container { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .product-layout { gap: 24px; }
+  .filters-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .navbar { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .main-content { padding: 28px 16px 32px; }
+  .hero-section { padding: 34px 10px 38px; }
+  .hero-section h1 { font-size: clamp(30px, 7vw, 44px); line-height: 1.25; overflow-wrap: anywhere; }
+  .hero-section .subtitle { font-size: clamp(16px, 3.6vw, 20px); }
+  .hero-stats { gap: 22px; }
+  .hero-stats .stat .number { font-size: 32px; }
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .similar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .product-card { min-width: 0; }
+  .product-card img, .product-image, .product-image img { max-width: 100%; }
+  .product-layout { grid-template-columns: minmax(0, 1fr); }
+  .product-image-box, .product-info { min-width: 0; width: 100%; }
+  .product-name { font-size: clamp(22px, 5vw, 32px); overflow-wrap: anywhere; }
+  .price-value { font-size: clamp(22px, 5vw, 30px); }
+  .actions-row { flex-wrap: wrap; }
+  .actions-row > *, .secondary-actions > * { min-width: 0; }
+  .filters-grid { grid-template-columns: minmax(0, 1fr); }
+  .toolbar, .results-count-bar, .footer-bottom { flex-wrap: wrap; }
+  .search-box { width: 100%; max-width: 100%; }
+  .footer-main { padding: 36px 18px 18px; }
+  .footer-container { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .footer-bottom { justify-content: center; text-align: center; }
+  .navbar { flex-wrap: wrap; gap: 12px; padding: 12px 16px; }
+  .navbar .nav-search { width: 100%; max-width: 100%; order: 5; }
+  .navbar .nav-search:focus-within { width: 100%; }
+  .navbar .nav-links { flex-wrap: wrap; gap: 10px 14px; }
+  .navbar .logo { max-width: 100%; }
+  .navbar .profile-name-nav { max-width: 76px; }
+  .cart-layout, .checkout-layout, .contact-layout, .profile-layout { grid-template-columns: minmax(0, 1fr); }
+  .cart-items, .cart-summary, .checkout-form, .checkout-summary { min-width: 0; width: 100%; }
+  .table-responsive, .table-wrapper { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 560px; }
+  .modal, .modal-content, .dialog, .popup { max-width: calc(100vw - 24px); }
+  .form-row, .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .btn, button { touch-action: manipulation; }
+}
+
+@media (max-width: 480px) {
+  .main-content { padding: 22px 12px 28px; }
+  .hero-section { padding: 26px 4px 30px; }
+  .hero-section h1 { font-size: clamp(27px, 8vw, 36px); }
+  .hero-section .greeting { font-size: 14px; letter-spacing: 1px; }
+  .hero-buttons { gap: 10px; }
+  .hero-buttons .btn, .btn { max-width: 100%; }
+  .product-grid, .similar-grid { gap: 10px; }
+  .product-card { border-radius: 14px; }
+  .product-card .card-actions { flex-wrap: wrap; gap: 7px; }
+  .product-card .card-actions > * { flex: 1 1 auto; min-width: 0; }
+  .toolbar { gap: 10px; }
+  .view-toggle { max-width: 100%; }
+  .price-inputs { flex-wrap: wrap; }
+  .price-inputs input { min-width: 0; width: 100%; }
+  .filters-footer .actions { flex-wrap: wrap; }
+  .filters-footer .actions > * { flex: 1 1 120px; }
+  .navbar { padding: 10px 12px; }
+  .navbar .logo { font-size: 20px; }
+  .navbar .nav-links { width: 100%; justify-content: flex-start; }
+  .navbar .login-btn, .navbar .profile-btn { padding: 7px 10px; }
+  .footer-main { padding: 30px 14px 16px; }
+  .quantity-selector { max-width: 100%; }
+  .quantity-selector button { min-width: 36px; }
+  .back-to-top { right: 14px; left: auto; bottom: 14px; }
+}

@@ -1,0 +1,249 @@
+/* ==================== shared/theme.css ==================== */
+
+html[data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(0, 0, 0, 0.03);
+    --bg-hover: rgba(0, 0, 0, 0.05);
+    --text-primary: #0a0a1a;
+    --text-secondary: #475569;
+    --text-light: #64748b;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(255, 107, 107, 0.4);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%) !important;
+    background-size: 400% 400% !important;
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .bg-animation .blob {
+    opacity: 0.15 !important;
+}
+
+html[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="light"] .navbar .logo {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .navbar .nav-links a {
+    color: rgba(10, 10, 26, 0.7) !important;
+}
+
+html[data-theme="light"] .navbar .nav-links a:hover,
+html[data-theme="light"] .navbar .nav-links a.active {
+    color: #ff6b6b !important;
+}
+
+html[data-theme="light"] .navbar .nav-search {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .navbar .nav-search input {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .navbar .nav-search input::placeholder {
+    color: rgba(10, 10, 26, 0.4) !important;
+}
+
+html[data-theme="light"] .navbar .nav-search i {
+    color: rgba(10, 10, 26, 0.5) !important;
+}
+
+html[data-theme="light"] .product-card,
+html[data-theme="light"] .info-card,
+html[data-theme="light"] .form-wrapper,
+html[data-theme="light"] .faq-item,
+html[data-theme="light"] .terms-content,
+html[data-theme="light"] .privacy-content,
+html[data-theme="light"] .toc {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    color: #0a0a1a !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+html[data-theme="light"] .product-card:hover,
+html[data-theme="light"] .info-card:hover,
+html[data-theme="light"] .faq-item[open] {
+    background: #ffffff !important;
+    border-color: rgba(255, 107, 107, 0.3) !important;
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.1);
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6 {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] li,
+html[data-theme="light"] span,
+html[data-theme="light"] label {
+    color: #334155;
+}
+
+html[data-theme="light"] .info-card h3,
+html[data-theme="light"] .faq-item summary,
+html[data-theme="light"] .faq-group-title,
+html[data-theme="light"] .terms-section h2,
+html[data-theme="light"] .privacy-section h2,
+html[data-theme="light"] .form-header h2 {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .form-group input,
+html[data-theme="light"] .form-group select,
+html[data-theme="light"] .form-group textarea {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .form-group input::placeholder,
+html[data-theme="light"] .form-group textarea::placeholder {
+    color: rgba(10, 10, 26, 0.4) !important;
+}
+
+html[data-theme="light"] .form-group select option {
+    background: #ffffff !important;
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .search-form,
+html[data-theme="light"] .filter-bar select,
+html[data-theme="light"] .faq-search-box {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .search-form input,
+html[data-theme="light"] .filter-bar select,
+html[data-theme="light"] .faq-search-box input {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .search-form input::placeholder,
+html[data-theme="light"] .faq-search-box input::placeholder {
+    color: rgba(10, 10, 26, 0.4) !important;
+}
+
+html[data-theme="light"] .footer-main {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .footer-brand .footer-logo {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .footer-col h4 {
+    color: #0a0a1a !important;
+}
+
+html[data-theme="light"] .footer-col ul li a,
+html[data-theme="light"] .footer-contact ul li a,
+html[data-theme="light"] .footer-contact ul li span,
+html[data-theme="light"] .footer-brand p {
+    color: rgba(10, 10, 26, 0.65) !important;
+}
+
+html[data-theme="light"] .footer-col ul li a:hover,
+html[data-theme="light"] .footer-contact ul li a:hover {
+    color: #ff6b6b !important;
+}
+
+html[data-theme="light"] .footer-bottom {
+    color: rgba(10, 10, 26, 0.5) !important;
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .back-to-top {
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.35);
+}
+
+html[data-theme="light"] .toast {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 107, 107, 0.15);
+    border-color: rgba(255, 107, 107, 0.4);
+    color: #ff6b6b;
+    transform: translateY(-2px) rotate(15deg);
+}
+
+.theme-toggle i {
+    transition: transform 0.4s;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(360deg);
+}
+
+html[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(10, 10, 26, 0.7);
+}
+
+html[data-theme="light"] .theme-toggle:hover {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+}
+
+body,
+.navbar,
+.footer-main,
+.product-card,
+.info-card,
+.form-wrapper,
+.faq-item,
+.terms-content,
+.privacy-content,
+.toc,
+.theme-toggle {
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease;
+}
+
+@media (max-width: 640px) {
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+}

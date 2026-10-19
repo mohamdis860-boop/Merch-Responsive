@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="إتمام الطلب - أكمل بيانات الشحن والدفع">
+    <title>إتمام الطلب - متجرنا</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/skeleton.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --success: #6bcb77;
+            --error: #ff4757;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --text-dim: rgba(255, 255, 255, 0.3);
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-strong: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 20px;
+            --transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        .bg-animation {
+            position: fixed; inset: 0;
+            z-index: 0; overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+        .bg-animation .blob:nth-child(1) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px; left: -150px;
+        }
+        .bg-animation .blob:nth-child(2) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px; right: -200px;
+            animation-delay: -7s;
+        }
+        .bg-animation .blob:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -14s;
+        }
+        .bg-animation .blob:nth-child(4) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 10%; right: 20%;
+            animation-delay: -4s;
+        }
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25%      { transform: translate(60px, -50px) scale(1.15); }
+            50%      { transform: translate(-40px, 40px) scale(0.9); }
+            75%      { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px 60px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-bottom: 25px;
+            animation: fadeInLeft 0.7s ease-out;
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .back-btn:hover { color: var(--primary); transform: translateX(-6px); }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.9s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .page-header .icon-big {
+            font-size: 55px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 12px;
+            animation: iconBounce 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5));
+        }
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-12px) scale(1.08); }
+        }
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 6s ease infinite;
+        }
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+        .page-header p { font-size: 16px; color: var(--text-muted); }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0 35px;
+            flex-wrap: wrap;
+        }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+        .progress-step .circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            transition: var(--transition);
+        }
+        .progress-step.done .circle {
+            background: linear-gradient(135deg, var(--success), #4caf50);
+            border-color: transparent;
+            color: white;
+        }
+        .progress-step.active .circle {
+            background: linear-gradient(135deg, var(--primary), var(--accent3));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            animation: pulseStep 2s ease-in-out infinite;
+        }
+        @keyframes pulseStep {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.1); }
+        }
+        .progress-step.done,
+        .progress-step.active { color: white; }
+        .progress-divider {
+            width: 30px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        .progress-divider.done { background: var(--success); }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .checkout-card {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.9s ease-out 0.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+        .checkout-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.04), transparent, rgba(108, 92, 231, 0.04), transparent);
+            animation: rotateGlow 20s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotateGlow { to { transform: rotate(360deg); } }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 1;
+        }
+        .card-title i { color: var(--primary); font-size: 20px; }
+        .card-title .step-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+        .form-group label i { color: var(--accent); margin-left: 4px; }
+
+        .form-input {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+        }
+        .form-input::placeholder { color: var(--text-dim); }
+
+        .form-input.invalid {
+            border-color: var(--error);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
+        }
+        .form-input.valid {
+            border-color: var(--success);
+        }
+        .field-error {
+            font-size: 11px;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+        .field-error.show { display: flex; }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: 0.4s;
+            user-select: none;
+            position: relative;
+        }
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 107, 107, 0.3);
+            transform: translateY(-2px);
+        }
+        .payment-option.selected {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+        }
+        .payment-option.coming-soon {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+        .payment-option.coming-soon:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .payment-option .coming-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255, 217, 61, 0.15);
+            color: var(--secondary);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .payment-option input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .payment-option input[type="radio"]:checked { border-color: var(--primary); }
+        .payment-option input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .payment-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .payment-option:nth-child(1) .payment-icon { background: linear-gradient(135deg, #6bcb77, #4caf50); }
+        .payment-option:nth-child(2) .payment-icon { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        .payment-option:nth-child(3) .payment-icon { background: linear-gradient(135deg, #00cec9, #00b894); }
+
+        .payment-text { flex: 1; }
+        .payment-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+        .payment-text p { font-size: 12px; color: var(--text-muted); }
+
+        .summary-sticky {
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+        .cart-item:last-of-type { border-bottom: none; }
+
+        .cart-item-image {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-image .no-img { color: rgba(255, 255, 255, 0.2); font-size: 20px; }
+
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-info h5 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cart-item-info span { font-size: 12px; color: var(--text-muted); }
+        .cart-item-total { font-size: 14px; font-weight: 700; color: var(--secondary); flex-shrink: 0; }
+
+        .totals {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .total-row .value { font-weight: 700; color: rgba(255, 255, 255, 0.9); }
+        .total-row.grand-total {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .total-row.grand-total .value {
+            color: var(--secondary);
+            font-size: 24px;
+            text-shadow: 0 0 15px rgba(255, 217, 61, 0.4);
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .confirm-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        .confirm-btn:hover:not(:disabled)::after { left: 100%; }
+        .confirm-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+        .confirm-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .empty-cart i {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-15px); }
+        }
+        .empty-cart h2 { font-size: 24px; margin-bottom: 10px; color: rgba(255, 255, 255, 0.5); }
+        .empty-cart p { font-size: 15px; margin-bottom: 25px; }
+        .empty-cart a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .empty-cart a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
+        }
+
+        .skeleton-checkout-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .skeleton-checkout-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            animation: skeletonFadeIn 0.5s ease-out both;
+        }
+        @keyframes skeletonFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .offline-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .offline-banner.show { transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .checkout-layout,
+            .skeleton-checkout-layout {
+                grid-template-columns: 1fr;
+            }
+            .summary-sticky { position: static; }
+        }
+        @media (max-width: 768px) {
+            .main-content { padding: 20px 15px 40px; }
+            .page-header h1 { font-size: 26px; }
+            .checkout-card,
+            .skeleton-checkout-card { padding: 20px; }
+            .progress-steps { gap: 8px; }
+            .progress-step span { display: none; }
+            .progress-divider { width: 20px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <div class="offline-banner" id="offlineBanner">
+        <i class="fas fa-wifi"></i> أنت غير متصل بالإنترنت
+    </div>
+
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <div class="main-content">
+
+        <a href="cart.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للسلة
+        </a>
+
+        <div class="page-header">
+            <i class="fas fa-credit-card icon-big" aria-hidden="true"></i>
+            <h1>إتمام الطلب</h1>
+            <p>اختار بياناتك وطريقة الدفع</p>
+        </div>
+
+        <div class="progress-steps" id="progressSteps">
+            <div class="progress-step done" data-step="1">
+                <div class="circle"><i class="fas fa-check"></i></div>
+                <span>السلة</span>
+            </div>
+            <div class="progress-divider done"></div>
+            <div class="progress-step active" data-step="2">
+                <div class="circle">2</div>
+                <span>البيانات</span>
+            </div>
+            <div class="progress-divider"></div>
+            <div class="progress-step" data-step="3">
+                <div class="circle">3</div>
+                <span>التأكيد</span>
+            </div>
+        </div>
+
+        <div id="skeletonContainer">
+            <div class="skeleton-checkout-layout">
+                <div>
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 180px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; border-radius: 12px;"></div>
+                    </div>
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 160px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; margin-bottom: 12px; border-radius: 14px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; margin-bottom: 12px; border-radius: 14px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; border-radius: 14px;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 140px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 130px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 55px; margin-top: 20px; border-radius: 50px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="emptyCart" class="empty-cart" style="display: none;">
+            <i class="fas fa-shopping-bag"></i>
+            <h2>السلة فارغة</h2>
+            <p>ضيف منتجات الأول عشان تكمل الطلب</p>
+            <a href="products.html">
+                <i class="fas fa-shopping-bag"></i>
+                ابدأ التسوق
+            </a>
+        </div>
+
+        <div class="checkout-layout" id="checkoutLayout" style="display: none;">
+
+            <div>
+
+                <div class="checkout-card">
+                    <h3 class="card-title">
+                        <span class="step-num">1</span>
+                        <i class="fas fa-truck"></i>
+                        بيانات الشحن
+                    </h3>
+
+                    <div class="form-group">
+                        <label for="fullName"><i class="fas fa-user"></i> الاسم بالكامل *</label>
+                        <input type="text" class="form-input" id="fullName" placeholder="مثال: محمد رضا" required autocomplete="name">
+                        <div class="field-error" id="err-fullName"><i class="fas fa-exclamation-circle"></i> اكتب اسمك بالكامل</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> رقم الموبايل *</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="01xxxxxxxxx" maxlength="11" required autocomplete="tel" inputmode="numeric">
+                        <div class="field-error" id="err-phone"><i class="fas fa-exclamation-circle"></i> رقم غير صحيح (11 رقم يبدأ بـ 01)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address"><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل *</label>
+                        <input type="text" class="form-input" id="address" placeholder="مثال: شبرا، شارع xxx، عمارة y" required autocomplete="street-address">
+                        <div class="field-error" id="err-address"><i class="fas fa-exclamation-circle"></i> اكتب عنوانك بالتفصيل</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-city"></i> المدينة *</label>
+                        <input type="text" class="form-input" id="city" placeholder="مثال: القاهرة" required autocomplete="address-level2">
+                        <div class="field-error" id="err-city"><i class="fas fa-exclamation-circle"></i> اكتب اسم المدينة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes"><i class="fas fa-comment"></i> ملاحظات (اختياري)</label>
+                        <input type="text" class="form-input" id="notes" placeholder="أي ملاحظات إضافية للطلب">
+                    </div>
+                </div>
+
+                <div class="checkout-card">
+                    <h3 class="card-title">
+                        <span class="step-num">2</span>
+                        <i class="fas fa-wallet"></i>
+                        طريقة الدفع
+                    </h3>
+
+                    <div class="payment-methods">
+
+                        <label class="payment-option selected" data-method="cod">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <div class="payment-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="payment-text">
+                                <h4>الدفع عند الاستلام</h4>
+                                <p>ادفع كاش لما الطلب يوصلك</p>
+                            </div>
+                        </label>
+
+                        <label class="payment-option coming-soon" data-method="card" aria-disabled="true">
+                            <input type="radio" name="payment" value="card" disabled>
+                            <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                            <div class="payment-text">
+                                <h4>بطاقة ائتمان</h4>
+                                <p>Visa / Mastercard</p>
+                            </div>
+                            <span class="coming-badge">قريباً</span>
+                        </label>
+
+                        <label class="payment-option coming-soon" data-method="wallet" aria-disabled="true">
+                            <input type="radio" name="payment" value="wallet" disabled>
+                            <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <div class="payment-text">
+                                <h4>محفظة إلكترونية</h4>
+                                <p>فودافون كاش / إتصالات كاش</p>
+                            </div>
+                            <span class="coming-badge">قريباً</span>
+                        </label>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="summary-sticky">
+                <div class="checkout-card">
+                    <h3 class="card-title">
+                        <span class="step-num">3</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        ملخص الطلب
+                    </h3>
+
+                    <div id="cartItemsList"></div>
+
+                    <div class="totals">
+                        <div class="total-row">
+                            <span>المجموع الفرعي</span>
+                            <span class="value" id="subtotal">0 ج.م</span>
+                        </div>
+                        <div class="total-row">
+                            <span>الشحن</span>
+                            <span class="value" id="shipping">30 ج.م</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>الإجمالي</span>
+                            <span class="value" id="grandTotal">0 ج.م</span>
+                        </div>
+                    </div>
+
+                    <button class="confirm-btn" id="confirmOrderBtn">
+                        <i class="fas fa-check-circle"></i>
+                        تأكيد الطلب
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const SHIPPING_FEE = 30;
+            const PHONE_REGEX = /^01[0-2,5][0-9]{8}$/;
+
+            const supabase           = window.getSupabase();
+            const skeletonContainer  = document.getElementById('skeletonContainer');
+            const checkoutLayout     = document.getElementById('checkoutLayout');
+            const emptyCart          = document.getElementById('emptyCart');
+            const offlineBanner      = document.getElementById('offlineBanner');
+            const progressSteps      = document.getElementById('progressSteps');
+
+            let cart = [];
+            let currentUser = null;
+            let currentCustomer = null;
+            let selectedPayment = 'cod';
+            let isSubmitting = false;
+
+            const escapeHtml = (text) => {
+                if (text == null) return '';
+                const div = document.createElement('div');
+                div.textContent = String(text);
+                return div.innerHTML;
+            };
+
+            const formatPrice = (price) =>
+                new Intl.NumberFormat('ar-EG').format(Number(price) || 0) + ' ج.م';
+
+            function setFieldState(id, state, showError = false) {
+                const input = document.getElementById(id);
+                if (!input) return;
+                input.classList.remove('valid', 'invalid');
+                if (state === 'valid')   input.classList.add('valid');
+                if (state === 'invalid') input.classList.add('invalid');
+                const err = document.getElementById('err-' + id);
+                if (err) err.classList.toggle('show', showError);
+            }
+
+            function validateField(id) {
+                const input = document.getElementById(id);
+                if (!input) return false;
+                const value = input.value.trim();
+                let valid = false;
+
+                if (id === 'phone') valid = PHONE_REGEX.test(value);
+                else valid = value.length > 0;
+
+                setFieldState(id, valid ? 'valid' : 'invalid', !valid);
+                return valid;
+            }
+
+            function updateProgress(step) {
+                const steps = progressSteps.querySelectorAll('.progress-step');
+                const dividers = progressSteps.querySelectorAll('.progress-divider');
+
+                steps.forEach((el, i) => {
+                    const num = i + 1;
+                    el.classList.remove('done', 'active');
+                    if (num < step) el.classList.add('done');
+                    else if (num === step) el.classList.add('active');
+                    el.querySelector('.circle').innerHTML =
+                        num < step ? '<i class="fas fa-check"></i>' : num;
+                });
+
+                dividers.forEach((el, i) => {
+                    el.classList.toggle('done', (i + 1) < step);
+                });
+            }
+
+            async function init() {
+                if (!supabase) {
+                    skeletonContainer.style.display = 'none';
+                    window.showToast?.('❌ تعذر الاتصال بالخادم', 'error');
+                    return;
+                }
+
+                try {
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session) {
+                        window.showToast?.('❌ لازم تسجل دخول الأول', 'error');
+                        setTimeout(() => {
+                            window.location.href = '../Auth/login.html';
+                        }, 1500);
+                        return;
+                    }
+                    currentUser = session.user;
+
+                    const { data: customer } = await supabase
+                        .from('Customers')
+                        .select('*')
+                        .eq('id', currentUser.id)
+                        .single();
+
+                    currentCustomer = customer || {
+                        Name: currentUser.user_metadata?.name || '',
+                        Email: currentUser.email,
+                        Phone: currentUser.user_metadata?.phone || '',
+                        Address: currentUser.user_metadata?.address || '',
+                        City: currentUser.user_metadata?.city || ''
+                    };
+
+                    cart = window.getCart ? window.getCart() : [];
+
+                    skeletonContainer.style.display = 'none';
+
+                    if (cart.length === 0) {
+                        emptyCart.style.display = 'block';
+                        checkoutLayout.style.display = 'none';
+                        progressSteps.style.display = 'none';
+                        return;
+                    }
+
+                    emptyCart.style.display = 'none';
+                    checkoutLayout.style.display = 'grid';
+
+                    prefillForm();
+                    renderSummary();
+                    attachEvents();
+                    updateProgress(2);
+
+                } catch (error) {
+                    console.error('❌ Init error:', error);
+                    skeletonContainer.style.display = 'none';
+                    window.showToast?.('❌ ' + error.message, 'error');
+                }
+            }
+
+            function prefillForm() {
+                document.getElementById('fullName').value = currentCustomer.Name || '';
+                document.getElementById('phone').value = currentCustomer.Phone || '';
+                document.getElementById('address').value = currentCustomer.Address || '';
+                document.getElementById('city').value = currentCustomer.City || '';
+            }
+
+            function renderSummary() {
+                const itemsList = document.getElementById('cartItemsList');
+                let html = '';
+                let subtotal = 0;
+
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    const imgUrl = window.getImageUrl ? window.getImageUrl(item.image) : null;
+
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                ${imgUrl
+                                    ? `<img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(item.name)}" loading="lazy">`
+                                    : `<i class="fas fa-image no-img"></i>`}
+                            </div>
+                            <div class="cart-item-info">
+                                <h5>${escapeHtml(item.name)}</h5>
+                                <span>${item.quantity} × ${formatPrice(item.price)}</span>
+                            </div>
+                            <div class="cart-item-total">${formatPrice(itemTotal)}</div>
+                        </div>
+                    `;
+                });
+
+                itemsList.innerHTML = html;
+
+                const grandTotal = subtotal + SHIPPING_FEE;
+                document.getElementById('subtotal').textContent = formatPrice(subtotal);
+                document.getElementById('shipping').textContent = formatPrice(SHIPPING_FEE);
+                document.getElementById('grandTotal').textContent = formatPrice(grandTotal);
+            }
+
+            function attachEvents() {
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.addEventListener('click', function() {
+                        if (this.classList.contains('coming-soon')) return;
+                        document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+                        this.classList.add('selected');
+                        const radio = this.querySelector('input[type="radio"]');
+                        if (radio) {
+                            radio.checked = true;
+                            selectedPayment = radio.value;
+                        }
+                    });
+                });
+
+                document.getElementById('phone').addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+
+                ['fullName', 'phone', 'address', 'city'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.addEventListener('blur', () => {
+                        if (el.value.trim()) validateField(id);
+                    });
+                    el.addEventListener('input', () => {
+                        if (el.classList.contains('invalid')) validateField(id);
+                    });
+                });
+
+                document.getElementById('confirmOrderBtn').addEventListener('click', confirmOrder);
+            }
+
+            async function confirmOrder() {
+                if (isSubmitting) return;
+
+                const fields = ['fullName', 'phone', 'address', 'city'];
+                const allValid = fields.map(validateField).every(Boolean);
+                if (!allValid) {
+                    window.showToast?.('❌ املأ كل الحقول المطلوبة بشكل صحيح', 'error');
+                    const firstInvalid = document.querySelector('.form-input.invalid');
+                    firstInvalid?.focus();
+                    return;
+                }
+
+                if (!currentUser) {
+                    window.showToast?.('❌ لازم تسجل دخول', 'error');
+                    return;
+                }
+
+                isSubmitting = true;
+                const btn = document.getElementById('confirmOrderBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري تأكيد الطلب...';
+
+                let createdOrderId = null;
+
+                try {
+                    const fullName = document.getElementById('fullName').value.trim();
+                    const phone    = document.getElementById('phone').value.trim();
+                    const address  = document.getElementById('address').value.trim();
+                    const city     = document.getElementById('city').value.trim();
+
+                    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const grandTotal = subtotal + SHIPPING_FEE;
+                    const shippingAddress = `${fullName} | ${phone} | ${address} | ${city}`;
+
+                    const orderPayload = {
+                        Customer_ID: currentUser.id,
+                        Total_Amount: grandTotal,
+                        Status: 'pending',
+                        Shipping_Address: shippingAddress,
+                        Payment_Method: selectedPayment,
+                        Payment_Status: 'pending',
+                        Order_Date: new Date().toISOString()
+                    };
+
+                    const { data: orderData, error: orderError } = await supabase
+                        .from('Order')
+                        .insert(orderPayload)
+                        .select()
+                        .single();
+
+                    if (orderError) throw orderError;
+                    if (!orderData) throw new Error('لم يتم إنشاء الطلب');
+
+                    createdOrderId = orderData.Order_ID || orderData.order_id;
+                    if (!createdOrderId) throw new Error('Order ID غير صالح');
+
+                    const itemsPayload = cart.map(item => ({
+                        Order_ID: createdOrderId,
+                        Product_ID: parseInt(item.id, 10),
+                        Quantity: item.quantity,
+                        Unit_Price: item.price,
+                        Total_Price: item.price * item.quantity
+                    }));
+
+                    const { error: itemsError } = await supabase
+                        .from('Order_Items')
+                        .insert(itemsPayload);
+
+                    if (itemsError) {
+                        await supabase.from('Order').delete().eq('Order_ID', createdOrderId);
+                        throw itemsError;
+                    }
+
+                    await supabase
+                        .from('Customers')
+                        .update({ Phone: phone, Address: address, City: city })
+                        .eq('id', currentUser.id)
+                        .then(() => {}) 
+                        .catch(() => {});
+
+                    window.clearCartItems?.();
+
+                    updateProgress(3);
+                    window.showToast?.('✅ تم تأكيد طلبك بنجاح!', 'success');
+
+                    setTimeout(() => {
+                        window.location.href = '../Auth/profile.html?tab=orders&success=1&order=' + createdOrderId;
+                    }, 1500);
+
+                } catch (error) {
+                    console.error('❌ Order error:', error);
+                    window.showToast?.('❌ ' + (error.message || 'حصل خطأ في تأكيد الطلب'), 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
+                    isSubmitting = false;
+                }
+            }
+
+            function updateOnlineStatus() {
+                offlineBanner.classList.toggle('show', !navigator.onLine);
+            }
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
+            init();
+
+        })();
+    </script>
+
+</body>
+</html>

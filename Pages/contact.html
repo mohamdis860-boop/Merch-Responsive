@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا | متجرنا</title>
+    <meta name="description" content="تواصل معنا لأي استفسار أو شكوى — نحن هنا لمساعدتك على مدار 12 ساعة.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .contact-hero {
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-hero p strong {
+            color: #ff6b6b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info {
+            padding: 40px 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 30px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.15);
+            border-color: rgba(255, 107, 107, 0.4);
+        }
+
+        .info-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(108, 92, 231, 0.15));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .info-card a,
+        .info-card p {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 0.95rem;
+            word-break: break-word;
+            transition: color 0.2s;
+            font-weight: 600;
+        }
+
+        .info-card a:hover {
+            color: #ff6b6b;
+        }
+
+        .contact-form-section {
+            padding: 40px 0 80px;
+        }
+
+        .form-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-header h2 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group label span.req {
+            color: #ff6b6b;
+        }
+
+        .form-group label .optional {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b6b' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 16px center;
+            background-size: 16px;
+            padding-left: 44px;
+        }
+
+        .form-group select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+
+        .form-group.success input,
+        .form-group.success select,
+        .form-group.success textarea {
+            border-color: #22c55e;
+        }
+
+        .error-msg {
+            display: block;
+            color: #ef4444;
+            font-size: 0.82rem;
+            margin-top: 6px;
+            min-height: 16px;
+            font-weight: 600;
+        }
+
+        .char-counter {
+            text-align: left;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+        }
+
+        .char-counter.warning { color: #f59e0b; }
+        .char-counter.danger  { color: #ef4444; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.45);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-submit.loading i {
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .contact-faq {
+            padding: 40px 0 80px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-faq h2 {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 32px;
+            color: #fff;
+        }
+
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 18px 22px;
+            transition: border-color 0.2s, background 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-item[open] {
+            border-color: rgba(255, 107, 107, 0.4);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 800;
+            color: #fff;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-item summary::-webkit-details-marker { display: none; }
+
+        .faq-item summary::after {
+            content: '\f067';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #ff6b6b;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item p {
+            margin-top: 14px;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .faq-item p a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .faq-item p a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .contact-hero {
+                padding: 60px 20px 40px;
+            }
+
+            .form-wrapper {
+                padding: 26px 20px;
+                border-radius: 18px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .info-card {
+                padding: 22px 14px;
+            }
+
+            .info-icon {
+                width: 54px;
+                height: 54px;
+                font-size: 1.25rem;
+            }
+
+            .info-card h3 {
+                font-size: 0.95rem;
+            }
+
+            .info-card a,
+            .info-card p {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <section class="contact-hero">
+        <h1 data-aos="fade-up">تواصل معنا</h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+            عندك سؤال؟ استفسار؟ أو عايز تقولنا رأيك؟<br>
+            إحنا هنا لخدمتك على مدار <strong>12 ساعة</strong>.
+        </p>
+    </section>
+
+    <section class="contact-info">
+        <div class="container">
+            <div class="info-grid">
+
+                <div class="info-card" data-aos="fade-up">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>الإيميل</h3>
+                    <a href="mailto:mohamdis860@gmail.com">mohamdis860@gmail.com</a>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <h3>التليفون</h3>
+                    <a href="tel:01026106479" dir="ltr">0102 610 6479</a>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+                    <h3>العنوان</h3>
+                    <p>فيصل، الجيزة</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <h3>ساعات العمل</h3>
+                    <p>يومياً — 12 ساعة</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="form-wrapper" data-aos="fade-up">
+
+                <div class="form-header">
+                    <h2>ابعتلنا رسالة</h2>
+                    <p>هنجاوبك في أقرب وقت ممكن</p>
+                </div>
+
+                <form id="contactForm" novalidate>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">الاسم <span class="req">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="اكتب اسمك" required>
+                            <small class="error-msg"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">الإيميل <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                            <small class="error-msg"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">التليفون <span class="optional">(اختياري)</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="01xxxxxxxxx" dir="ltr">
+                        <small class="error-msg"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">الموضوع <span class="req">*</span></label>
+                        <select id="subject" name="subject" required>
+                            <option value="">اختر الموضوع</option>
+                            <option value="استفسار">استفسار عن منتج</option>
+                            <option value="شكوى">شكوى</option>
+                            <option value="اقتراح">اقتراح</option>
+                            <option value="تعاون">طلب تعاون</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                        <small class="error-msg"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">الرسالة <span class="req">*</span></label>
+                        <textarea id="message" name="message" rows="6" placeholder="اكتب رسالتك هنا..." required maxlength="1000"></textarea>
+                        <div class="char-counter"><span id="charCount">0</span> / 1000</div>
+                        <small class="error-msg"></small>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>إرسال الرسالة</span>
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-faq">
+        <div class="container">
+            <h2 data-aos="fade-up">أسئلة سريعة</h2>
+
+            <div class="faq-list">
+
+                <details class="faq-item" data-aos="fade-up">
+                    <summary>إمتى هتردوا عليّ؟</summary>
+                    <p>عادةً بنرد في خلال 24 ساعة كحد أقصى، وأحياناً أسرع.</p>
+                </details>
+
+                <details class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <summary>أقدر أتواصل معاكم بالتليفون؟</summary>
+                    <p>أيوه، تقدر تتصل على الرقم <a href="tel:01026106479" dir="ltr">0102 610 6479</a> خلال ساعات العمل (12 ساعة يومياً).</p>
+                </details>
+
+                <details class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <summary>عندي شكوى، أعمل إيه؟</summary>
+                    <p>اختار "شكوى" من الـ Form واكتب التفاصيل، وهنراجعها فوراً.</p>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+        const EMAILJS_CONFIG = {
+            serviceId:  'service_dnx1ixd',
+            templateId: 'template_860mz8v',
+            publicKey:  '42ESxcURJdSdW7c15'
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+                console.log('✅ EmailJS initialized');
+            } else {
+                console.warn('⚠️ EmailJS SDK not loaded');
+            }
+
+            const messageEl = document.getElementById('message');
+            const charCountEl = document.getElementById('charCount');
+            const counterEl = charCountEl?.parentElement;
+
+            if (messageEl && charCountEl) {
+                messageEl.addEventListener('input', () => {
+                    const len = messageEl.value.length;
+                    charCountEl.textContent = len;
+                    counterEl.classList.toggle('warning', len > 800 && len <= 950);
+                    counterEl.classList.toggle('danger', len > 950);
+                });
+            }
+
+            const showError = (input, msg) => {
+                const group = input.closest('.form-group');
+                group.classList.add('error');
+                group.classList.remove('success');
+                const err = group.querySelector('.error-msg');
+                if (err) err.textContent = msg;
+            };
+
+            const showSuccess = (input) => {
+                const group = input.closest('.form-group');
+                group.classList.remove('error');
+                group.classList.add('success');
+                const err = group.querySelector('.error-msg');
+                if (err) err.textContent = '';
+            };
+
+            const validators = {
+                name: (v) => {
+                    if (!v.trim()) return 'من فضلك اكتب اسمك';
+                    if (v.trim().length < 2) return 'الاسم قصير جداً';
+                    return '';
+                },
+                email: (v) => {
+                    if (!v.trim()) return 'من فضلك اكتب الإيميل';
+                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!re.test(v)) return 'الإيميل غير صحيح';
+                    return '';
+                },
+                phone: (v) => {
+                    if (!v.trim()) return ''; // optional
+                    const re = /^01[0-2,5]\d{8}$/;
+                    if (!re.test(v.replace(/\s/g, ''))) return 'رقم التليفون غير صحيح';
+                    return '';
+                },
+                subject: (v) => (!v ? 'اختر الموضوع' : ''),
+                message: (v) => {
+                    if (!v.trim()) return 'اكتب رسالتك';
+                    if (v.trim().length < 10) return 'الرسالة قصيرة جداً (10 أحرف على الأقل)';
+                    return '';
+                }
+            };
+
+            const form = document.getElementById('contactForm');
+            if (!form) return;
+
+            const fields = ['name', 'email', 'phone', 'subject', 'message'];
+
+            fields.forEach((id) => {
+                const input = document.getElementById(id);
+                if (!input) return;
+
+                input.addEventListener('blur', () => {
+                    const err = validators[id]?.(input.value);
+                    if (err) showError(input, err);
+                    else showSuccess(input);
+                });
+
+                input.addEventListener('input', () => {
+                    const group = input.closest('.form-group');
+                    if (group.classList.contains('error')) {
+                        const err = validators[id]?.(input.value);
+                        if (!err) showSuccess(input);
+                    }
+                });
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                let hasError = false;
+                fields.forEach((id) => {
+                    const input = document.getElementById(id);
+                    if (!input) return;
+                    const err = validators[id]?.(input.value);
+                    if (err) { showError(input, err); hasError = true; }
+                    else showSuccess(input);
+                });
+
+                if (hasError) {
+                    if (window.showToast) window.showToast('راجع الحقول المطلوبة', 'error');
+                    const firstErr = form.querySelector('.form-group.error');
+                    firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+
+                const btn = document.getElementById('submitBtn');
+                const originalHTML = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('loading');
+                btn.innerHTML = '<i class="fas fa-spinner"></i><span>جاري الإرسال...</span>';
+
+                try {
+                    const response = await emailjs.sendForm(
+                        EMAILJS_CONFIG.serviceId,
+                        EMAILJS_CONFIG.templateId,
+                        form,
+                        { publicKey: EMAILJS_CONFIG.publicKey }
+                    );
+
+                    console.log('✅ Email sent:', response.status, response.text);
+
+                    if (window.showToast) {
+                        window.showToast('تم استلام رسالتك — هنرد عليك قريب', 'success');
+                    }
+
+                    form.reset();
+                    if (charCountEl) charCountEl.textContent = '0';
+                    if (counterEl) counterEl.classList.remove('warning', 'danger');
+                    form.querySelectorAll('.form-group').forEach(g => {
+                        g.classList.remove('error', 'success');
+                    });
+                    form.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
+
+                } catch (error) {
+                    console.error('❌ Email failed:', error);
+                    const msg = error?.text || error?.message || 'حاول تاني بعد شوية';
+                    if (window.showToast) {
+                        window.showToast('فشل الإرسال: ' + msg, 'error');
+                    }
+                } finally {
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                    btn.innerHTML = originalHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

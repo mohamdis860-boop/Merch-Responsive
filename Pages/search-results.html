@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج البحث | متجرنا</title>
+    <meta name="description" content="نتائج البحث عن المنتجات في متجرنا.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/skeleton.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .search-hero {
+            padding: 60px 20px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.12), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .search-hero .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 107, 107, 0.12);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 50px;
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-hero h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-hero h1 .query {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .search-hero .results-info {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-hero .results-info strong {
+            color: #ffd93d;
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+
+        .search-form-container {
+            max-width: 700px;
+            margin: 30px auto 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0 8px 0 22px;
+            transition: 0.35s;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-form:focus-within {
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.25);
+        }
+
+        .search-form i.fa-search {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .search-form:focus-within i.fa-search { color: #ff6b6b; }
+
+        .search-form input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 14px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            outline: none;
+            min-width: 0;
+        }
+
+        .search-form input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+        .search-form button {
+            padding: 11px 26px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            flex-shrink: 0;
+        }
+
+        .search-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+        }
+
+        .filter-bar {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .filter-bar select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 11px 20px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            min-width: 180px;
+            transition: 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b6b' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 16px center;
+            background-size: 14px;
+            padding-left: 42px;
+        }
+
+        .filter-bar select:hover,
+        .filter-bar select:focus {
+            border-color: #ff6b6b;
+            background-color: rgba(255, 107, 107, 0.1);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+        }
+
+        .filter-bar select option { background: #1a1a2e; color: #fff; }
+
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px 80px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 22px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            animation: cardSlideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        @keyframes cardSlideUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.06), transparent, rgba(108, 92, 231, 0.06), transparent);
+            animation: rotateGlow 12s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before { opacity: 1; }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 35px rgba(255, 107, 107, 0.2);
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .product-card .product-id-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            padding: 3px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-card h4 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            min-height: 50px;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+        }
+
+        .product-card:hover h4 { color: #ffd93d; }
+
+        .product-card h4 i {
+            color: #ff6b6b;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .product-card .price {
+            font-size: 21px;
+            font-weight: 800;
+            color: #ffd93d;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 12px rgba(255, 217, 61, 0.3);
+        }
+
+        .product-card .price i {
+            font-size: 15px;
+            margin-left: 6px;
+        }
+
+        .product-card .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+            align-items: stretch;
+        }
+
+        .product-card .btn-sm {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .product-card .btn-cart {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .product-card .btn-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+        }
+
+        .product-card .btn-details {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 50px;
+            flex: 0 0 50px;
+        }
+
+        .product-card .btn-details:hover {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .btn-compare-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .btn-compare-toggle:hover {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: rgba(108, 92, 231, 0.5);
+            color: #a29bfe;
+            transform: translateY(-2px);
+        }
+
+        .btn-compare-toggle.active {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.5);
+        }
+
+        .btn-compare-toggle.active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            background: #22c55e;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 2px solid #0a0a1a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px 40px;
+            display: none;
+        }
+
+        .empty-state.show { display: block; }
+
+        .empty-icon {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(108, 92, 231, 0.1));
+            border: 2px dashed rgba(255, 107, 107, 0.3);
+            font-size: 3rem;
+            color: #ff6b6b;
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h2 .query { color: #ff6b6b; }
+
+        .empty-state p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .suggestions .btn-suggestion {
+            padding: 11px 24px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .suggestions .btn-suggestion:hover {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: rgba(255, 107, 107, 0.4);
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .suggestions .btn-suggestion.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        @media (max-width: 640px) {
+            .search-hero { padding: 40px 20px 20px; }
+
+            .search-form { padding: 0 6px 0 16px; }
+
+            .search-form button { padding: 10px 18px; }
+
+            .search-form button span { display: none; }
+
+            .filter-bar { padding: 0 15px; }
+
+            .filter-bar select { flex: 1; min-width: 140px; }
+
+            .products-container { padding: 30px 15px 60px; }
+
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .product-card { padding: 16px; }
+
+            .product-card h4 {
+                font-size: 15px;
+                min-height: 42px;
+            }
+
+            .product-card .price { font-size: 18px; }
+
+            .btn-compare-toggle {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="stylesheet" href="../shared/responsive.css">
+</head>
+<body>
+
+    <section class="search-hero">
+        <span class="badge" data-aos="fade-down">
+            <i class="fas fa-search"></i>
+            نتائج البحث
+        </span>
+        <h1 data-aos="fade-up" data-aos-delay="100" id="searchTitle">
+            نتائج البحث عن: <span class="query" id="queryDisplay">...</span>
+        </h1>
+        <p class="results-info" data-aos="fade-up" data-aos-delay="200" id="resultsInfo">
+            جاري البحث...
+        </p>
+
+        <div class="search-form-container" data-aos="fade-up" data-aos-delay="300">
+            <form class="search-form" id="searchForm">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن منتج تاني..." autocomplete="off">
+                <button type="submit">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>بحث</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <div class="filter-bar" id="filterBar" data-aos="fade-up" data-aos-delay="400" style="display: none;">
+        <select id="sortFilter">
+            <option value="default">الترتيب الافتراضي</option>
+            <option value="price_asc">السعر: من الأقل للأعلى</option>
+            <option value="price_desc">السعر: من الأعلى للأقل</option>
+            <option value="name_asc">الاسم: من A إلى Z</option>
+            <option value="name_desc">الاسم: من Z إلى A</option>
+        </select>
+    </div>
+
+    <div class="products-container">
+
+        <div id="loadingState">
+            <div class="skeleton-product-grid">
+                <div class="skeleton-product-card">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+                <div class="skeleton-product-card">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+                <div class="skeleton-product-card">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+                <div class="skeleton-product-card">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-grid" id="productGrid" style="display: none;"></div>
+
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+                <i class="fas fa-search-minus"></i>
+            </div>
+            <h2>مفيش نتائج لـ "<span class="query" id="emptyQuery">...</span>"</h2>
+            <p>جرب تدور بكلمة تانية أو تصفح الأقسام</p>
+
+            <div class="suggestions">
+                <a href="products.html" class="btn-suggestion primary">
+                    <i class="fas fa-box"></i> كل المنتجات
+                </a>
+                <a href="categories.html" class="btn-suggestion">
+                    <i class="fas fa-tags"></i> التصنيفات
+                </a>
+                <a href="../index.html" class="btn-suggestion">
+                    <i class="fas fa-home"></i> الرئيسية
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/compare.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/notifications.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
+            }
+
+            const searchForm    = document.getElementById('searchForm');
+            const searchInput   = document.getElementById('searchInput');
+            const queryDisplay  = document.getElementById('queryDisplay');
+            const emptyQuery    = document.getElementById('emptyQuery');
+            const resultsInfo   = document.getElementById('resultsInfo');
+            const filterBar     = document.getElementById('filterBar');
+            const sortFilter    = document.getElementById('sortFilter');
+            const loadingState  = document.getElementById('loadingState');
+            const productGrid   = document.getElementById('productGrid');
+            const emptyState    = document.getElementById('emptyState');
+
+            let currentQuery = '';
+            let allResults = [];
+            let displayedResults = [];
+
+            function safeToString(v) {
+                return (v === null || v === undefined) ? '' : String(v);
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function getQueryFromURL() {
+                const params = new URLSearchParams(window.location.search);
+                return (params.get('q') || '').trim();
+            }
+
+            function updateURL(query) {
+                const url = new URL(window.location);
+                if (query) {
+                    url.searchParams.set('q', query);
+                } else {
+                    url.searchParams.delete('q');
+                }
+                window.history.replaceState({}, '', url);
+            }
+
+            function updateHeader(query, count) {
+                queryDisplay.textContent = query;
+                emptyQuery.textContent = query;
+
+                if (count > 0) {
+                    resultsInfo.innerHTML = `لقينا <strong>${count}</strong> ${count === 1 ? 'منتج' : 'منتجات'} مطابقة`;
+                } else {
+                    resultsInfo.textContent = 'مفيش نتائج مطابقة';
+                }
+
+                document.title = `نتائج البحث عن "${query}" | متجرنا`;
+            }
+
+            function createProductCard(item, index) {
+                const productId = safeToString(item.Product_ID);
+                const productName = safeToString(item.Product_Name) || 'بدون اسم';
+                const price = parseFloat(item.Selling_Price) || 0;
+                const imageUrl = item.Image_URL || '';
+
+                const icons = ['fa-tag', 'fa-box', 'fa-cube', 'fa-gem', 'fa-star', 'fa-crown'];
+                const icon = icons[index % icons.length];
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+
+                const badge = document.createElement('div');
+                badge.className = 'product-id-badge';
+                badge.innerHTML = `<i class="fas fa-barcode"></i> ${escapeHtml(productId)}`;
+
+                const title = document.createElement('h4');
+                title.innerHTML = `<i class="fas ${icon}"></i> ${escapeHtml(productName)}`;
+
+                const priceEl = document.createElement('div');
+                priceEl.className = 'price';
+                priceEl.innerHTML = `
+                    <i class="fas fa-tag"></i>
+                    ${price > 0 ? Number(price).toLocaleString('en-US') + ' ج.م' : '—'}
+                `;
+
+                const actions = document.createElement('div');
+                actions.className = 'card-actions';
+
+                const cartBtn = document.createElement('button');
+                cartBtn.className = 'btn-sm btn-cart';
+                cartBtn.innerHTML = `<i class="fas fa-cart-plus"></i> أضف`;
+                cartBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (this.disabled) return;
+                    this.disabled = true;
+                    if (window.addToCartItem) {
+                        window.addToCartItem(productId, productName, price, imageUrl);
+                    }
+                    setTimeout(() => { this.disabled = false; }, 500);
+                });
+
+                const detailsBtn = document.createElement('button');
+                detailsBtn.className = 'btn-sm btn-details';
+                detailsBtn.innerHTML = `<i class="fas fa-eye"></i>`;
+                detailsBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
+                });
+
+                const compareBtn = document.createElement('button');
+                compareBtn.className = 'btn-compare-toggle';
+                compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
+                compareBtn.title = 'أضف للمقارنة';
+                compareBtn.innerHTML = `<i class="fas fa-balance-scale"></i>`;
+                if (window.isInCompare && window.isInCompare(productId)) {
+                    compareBtn.classList.add('active');
+                }
+                compareBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (window.toggleCompare) {
+                        const added = window.toggleCompare({
+                            id: productId,
+                            name: productName,
+                            price: price,
+                            image: imageUrl
+                        });
+                        this.classList.toggle('active', added);
+                    }
+                });
+
+                actions.appendChild(cartBtn);
+                actions.appendChild(detailsBtn);
+                actions.appendChild(compareBtn);
+
+                card.appendChild(badge);
+                card.appendChild(title);
+                card.appendChild(priceEl);
+                card.appendChild(actions);
+
+                card.addEventListener('click', () => {
+                    window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
+                });
+
+                return card;
+            }
+
+            function render() {
+                if (!displayedResults || displayedResults.length === 0) {
+                    productGrid.style.display = 'none';
+                    emptyState.classList.add('show');
+                    filterBar.style.display = 'none';
+                    return;
+                }
+
+                emptyState.classList.remove('show');
+                productGrid.style.display = 'grid';
+                filterBar.style.display = 'flex';
+
+                productGrid.innerHTML = '';
+                displayedResults.forEach((item, i) => {
+                    productGrid.appendChild(createProductCard(item, i));
+                });
+            }
+
+            function applySort() {
+                const sort = sortFilter.value;
+                const sorted = [...allResults];
+
+                switch (sort) {
+                    case 'price_asc':
+                        sorted.sort((a, b) => (parseFloat(a.Selling_Price) || 0) - (parseFloat(b.Selling_Price) || 0));
+                        break;
+                    case 'price_desc':
+                        sorted.sort((a, b) => (parseFloat(b.Selling_Price) || 0) - (parseFloat(a.Selling_Price) || 0));
+                        break;
+                    case 'name_asc':
+                        sorted.sort((a, b) => safeToString(a.Product_Name).localeCompare(safeToString(b.Product_Name)));
+                        break;
+                    case 'name_desc':
+                        sorted.sort((a, b) => safeToString(b.Product_Name).localeCompare(safeToString(a.Product_Name)));
+                        break;
+                }
+
+                displayedResults = sorted;
+                render();
+            }
+
+            async function performSearch(query) {
+                if (!query) {
+                    window.location.href = 'products.html';
+                    return;
+                }
+
+                currentQuery = query;
+                searchInput.value = query;
+                updateURL(query);
+                updateHeader(query, 0);
+
+                loadingState.style.display = 'block';
+                productGrid.style.display = 'none';
+                emptyState.classList.remove('show');
+                filterBar.style.display = 'none';
+
+                const queryLower = query.toLowerCase().trim();
+                let results = [];
+
+                try {
+                    try {
+                        const safeQuery = queryLower.replace(/[%_\\]/g, '\\$&');
+                        const { data, error } = await supabase
+                            .from('Product')
+                            .select('Product_ID, Product_Name, Selling_Price, Image_URL')
+                            .ilike('Product_Name', `%${safeQuery}%`);
+
+                        if (error) throw error;
+                        results = data || [];
+                        console.log(`📡 Supabase ilike → ${results.length} results`);
+                    } catch (ilikeErr) {
+                        console.warn('⚠️ ilike failed, using fallback:', ilikeErr.message);
+                        results = [];
+                    }
+
+                    if (results.length === 0) {
+                        const { data: allProducts, error: allErr } = await supabase
+                            .from('Product')
+                            .select('Product_ID, Product_Name, Selling_Price, Image_URL');
+
+                        if (allErr) throw allErr;
+
+                        results = (allProducts || []).filter(p => {
+                            const name = String(p.Product_Name || '').toLowerCase().trim();
+                            return name.includes(queryLower);
+                        });
+                        console.log(`🔍 Client-side filter → ${results.length} results`);
+                    }
+
+                    if (results.length === 0 && queryLower.includes(' ')) {
+                        const firstWord = queryLower.split(/\s+/)[0];
+                        if (firstWord.length >= 2) {
+                            const { data: allProducts } = await supabase
+                                .from('Product')
+                                .select('Product_ID, Product_Name, Selling_Price, Image_URL');
+
+                            results = (allProducts || []).filter(p => {
+                                const name = String(p.Product_Name || '').toLowerCase();
+                                return name.includes(firstWord);
+                            });
+                            console.log(`🔍 First word "${firstWord}" → ${results.length} results`);
+                        }
+                    }
+
+                    allResults = results;
+                    displayedResults = [...allResults];
+
+                    loadingState.style.display = 'none';
+                    updateHeader(query, allResults.length);
+                    applySort();
+
+                    if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
+
+                    console.log(`✅ Search "${query}" → ${allResults.length} results total`);
+                } catch (err) {
+                    console.error('❌ Search failed:', err);
+                    loadingState.style.display = 'none';
+                    allResults = [];
+                    displayedResults = [];
+                    updateHeader(query, 0);
+                    render();
+
+                    if (window.showToast) window.showToast('فشل البحث — حاول تاني', 'error');
+                }
+            }
+
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    performSearch(query);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            sortFilter.addEventListener('change', applySort);
+
+            const initialQuery = getQueryFromURL();
+            if (initialQuery) {
+                performSearch(initialQuery);
+            } else {
+                window.location.href = 'products.html';
+            }
+
+            console.log('%c🔍 Search Results page loaded (with compare)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+        });
+    </script>
+</body>
+</html>

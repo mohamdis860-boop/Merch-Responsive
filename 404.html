@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="الصفحة غير موجودة - متجرنا">
+    <title>صفحة غير موجودة - متجرنا</title>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="متجرنا">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="shared/navbar.css">
+    <link rel="stylesheet" href="shared/toast.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --success: #6bcb77;
+            --error: #ff4757;
+            --bg-dark: #0a0a1a;
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --text-dim: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+
+        .bg-animation .blob:nth-child(1) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px; left: -150px;
+        }
+        .bg-animation .blob:nth-child(2) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px; right: -200px;
+            animation-delay: -7s;
+        }
+        .bg-animation .blob:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -14s;
+        }
+        .bg-animation .blob:nth-child(4) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 10%; right: 20%;
+            animation-delay: -4s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -50px) scale(1.15); }
+            50% { transform: translate(-40px, 40px) scale(0.9); }
+            75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.04);
+            font-size: 45px;
+            animation: floatIcon 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .floating-icon:nth-of-type(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-of-type(2) { top: 70%; left: 8%; animation-delay: -2s; }
+        .floating-icon:nth-of-type(3) { top: 20%; right: 12%; animation-delay: -4s; }
+        .floating-icon:nth-of-type(4) { top: 75%; right: 15%; animation-delay: -6s; }
+        .floating-icon:nth-of-type(5) { top: 45%; left: 5%; animation-delay: -1s; font-size: 32px; }
+        .floating-icon:nth-of-type(6) { top: 55%; right: 6%; animation-delay: -3s; font-size: 38px; }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.04; }
+            50% { transform: translateY(-30px) rotate(15deg); opacity: 0.08; }
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: calc(100vh - 90px);
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            animation: errorEnter 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes errorEnter {
+            0% { opacity: 0; transform: scale(0.8) translateY(40px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .error-number {
+            font-size: 180px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 5s ease infinite;
+            display: inline-block;
+            letter-spacing: -10px;
+            text-shadow: 0 0 60px rgba(255, 107, 107, 0.3);
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .error-number span {
+            display: inline-block;
+            animation: numberBounce 2.5s ease-in-out infinite;
+        }
+        .error-number span:nth-child(1) { animation-delay: 0s; }
+        .error-number span:nth-child(2) { animation-delay: 0.2s; }
+        .error-number span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes numberBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .error-icon {
+            font-size: 70px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 25px;
+            animation: iconShake 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 107, 107, 0.5));
+        }
+
+        @keyframes iconShake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(15deg) scale(1.1); }
+        }
+
+        .error-title {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #ffd93d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .error-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.7s both;
+        }
+
+        .error-btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.35s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .error-btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        .error-btn-primary:hover::after { left: 100%; }
+        .error-btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 14px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .error-btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .error-btn-outline:hover {
+            border-color: var(--accent);
+            background: rgba(108, 92, 231, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .quick-links {
+            animation: fadeInUp 0.8s ease-out 0.9s both;
+        }
+        .quick-links-title {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .quick-links-title::before,
+        .quick-links-title::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .quick-links-grid {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .quick-link {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.35s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .quick-link:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: rgba(255, 107, 107, 0.4);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.2);
+        }
+
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 25px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        .footer i {
+            color: var(--primary);
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.2); }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent3));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: 0.35s;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-to-top:hover { transform: translateY(-4px) scale(1.05); }
+
+        .offline-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .offline-banner.show { transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .error-number { font-size: 120px; letter-spacing: -5px; }
+            .error-title { font-size: 28px; }
+            .error-subtitle { font-size: 15px; }
+            .error-icon { font-size: 55px; }
+            .error-btn { padding: 12px 24px; font-size: 14px; }
+        }
+
+        @media (max-width: 500px) {
+            .error-number { font-size: 90px; letter-spacing: -3px; }
+            .error-title { font-size: 22px; }
+            .error-subtitle { font-size: 14px; }
+            .error-icon { font-size: 45px; }
+            .error-buttons { flex-direction: column; align-items: stretch; }
+            .error-btn { justify-content: center; }
+            .floating-icon { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="shared/responsive.css">
+</head>
+<body>
+
+    <div class="offline-banner" id="offlineBanner">
+        <i class="fas fa-wifi"></i> أنت غير متصل بالإنترنت
+    </div>
+
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <i class="fas fa-search floating-icon" aria-hidden="true"></i>
+    <i class="fas fa-exclamation-triangle floating-icon" aria-hidden="true"></i>
+    <i class="fas fa-compass floating-icon" aria-hidden="true"></i>
+    <i class="fas fa-map-signs floating-icon" aria-hidden="true"></i>
+    <i class="fas fa-question floating-icon" aria-hidden="true"></i>
+    <i class="fas fa-ghost floating-icon" aria-hidden="true"></i>
+
+    <div class="main-content">
+        <div class="error-container">
+
+            <div class="error-number">
+                <span>4</span><span>0</span><span>4</span>
+            </div>
+
+            <i class="fas fa-search-minus error-icon" aria-hidden="true"></i>
+
+            <h1 class="error-title">الصفحة غير موجودة!</h1>
+
+            <p class="error-subtitle">
+                عذراً، الصفحة اللي بتدور عليها مش موجودة أو اتنقلت لمكان تاني.
+                <br>
+                تأكد من الرابط أو ارجع للصفحة الرئيسية.
+            </p>
+
+            <div class="error-buttons">
+                <a href="index.html" class="error-btn error-btn-primary">
+                    <i class="fas fa-home"></i>
+                    العودة للرئيسية
+                </a>
+                <a href="Pages/products.html" class="error-btn error-btn-outline">
+                    <i class="fas fa-shopping-bag"></i>
+                    تصفح المنتجات
+                </a>
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-links-title">
+                    <i class="fas fa-link"></i>
+                    روابط سريعة
+                </div>
+                <div class="quick-links-grid">
+                    <a href="Pages/categories.html" class="quick-link">
+                        <i class="fas fa-tags"></i>
+                        التصنيفات
+                    </a>
+                    <a href="Pages/cart.html" class="quick-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        السلة
+                    </a>
+                    <a href="Pages/wishlist.html" class="quick-link">
+                        <i class="fas fa-heart"></i>
+                        المفضلة
+                    </a>
+                    <a href="Pages/about.html" class="quick-link">
+                        <i class="fas fa-info-circle"></i>
+                        تعرف علينا
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            <i class="fas fa-heart"></i>
+            جميع الحقوق محفوظة © 2024 متجرنا
+        </p>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="shared/config.js"></script>
+    <script src="shared/cart.js"></script>
+    <script src="shared/toast.js"></script>
+    <script src="shared/navbar.js"></script>
+    <script src="shared/notifications.js"></script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const backToTop = document.getElementById('backToTop');
+            const offlineBanner = document.getElementById('offlineBanner');
+
+            window.addEventListener('scroll', () => {
+                backToTop?.classList.toggle('visible', window.scrollY > 400);
+            }, { passive: true });
+            
+            backToTop?.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            function updateOnlineStatus() {
+                offlineBanner?.classList.toggle('show', !navigator.onLine);
+            }
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js').catch(() => {});
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
