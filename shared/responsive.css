@@ -19,7 +19,6 @@
         font-size: 24px;
     }
 
-    /* Fixed bottom navigation on mobile only */
     .navbar .nav-links {
         position: fixed;
         bottom: 0;

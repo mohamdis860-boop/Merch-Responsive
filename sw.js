@@ -68,7 +68,6 @@ const STATIC_ASSETS = [
     `${BASE_PATH}/icons/web-app-manifest-512x512.png`
 ];
 
-// ===== Install =====
 self.addEventListener('install', (event) => {
     console.log('📦 SW: Installing...');
 
@@ -92,7 +91,6 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// ===== Activate =====
 self.addEventListener('activate', (event) => {
     console.log('🔄 SW: Activating...');
 
@@ -115,7 +113,6 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// ===== Fetch =====
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
@@ -124,7 +121,6 @@ self.addEventListener('fetch', (event) => {
     if (url.hostname.includes('supabase')) return;
     if (url.protocol === 'chrome-extension:') return;
 
-    // CDN: Cache-First
     if (url.hostname.includes('cdnjs.cloudflare.com') ||
         url.hostname.includes('fonts.googleapis.com') ||
         url.hostname.includes('fonts.gstatic.com') ||
@@ -149,7 +145,6 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Local: Network-First
     event.respondWith(
         fetch(request)
             .then((response) => {
@@ -173,7 +168,6 @@ self.addEventListener('fetch', (event) => {
     );
 });
 
-// ===== Message =====
 self.addEventListener('message', (event) => {
     if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
