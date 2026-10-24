@@ -33,15 +33,12 @@
     text-decoration: none;
     transition: 0.4s;
 }
-
 .navbar .logo:hover { transform: scale(1.05); }
-
 .navbar .logo i {
     color: #ff6b6b;
     font-size: 30px;
     animation: navbarLogoPulse 2.5s ease-in-out infinite;
 }
-
 @keyframes navbarLogoPulse {
     0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
     50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
@@ -69,13 +66,11 @@
     border-radius: 8px;
     position: relative;
 }
-
 .navbar .nav-links a:not(.cart-badge):not(.profile-btn):not(.login-btn):not(.wishlist-badge):not(.notif-bell):hover {
     color: #ff6b6b;
     background: rgba(255, 255, 255, 0.05);
     transform: translateY(-2px);
 }
-
 .navbar .nav-links a.active {
     color: #ff6b6b;
     background: rgba(255, 107, 107, 0.1);
@@ -100,7 +95,6 @@
     text-decoration: none;
     color: white !important;
 }
-
 .navbar .cart-badge:hover,
 .navbar .wishlist-badge:hover,
 .navbar .profile-btn:hover,
@@ -110,7 +104,6 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
 }
-
 .navbar .cart-badge i,
 .navbar .wishlist-badge i,
 .navbar .profile-btn i,
@@ -160,19 +153,16 @@
     pointer-events: none;
     animation: navbarBadgePop 0.4s ease-out;
 }
-
 .navbar .cart-badge .badge-count {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: white;
     box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
 }
-
 .navbar .wishlist-badge .badge-count {
     background: linear-gradient(135deg, #fd79a8, #e84393);
     color: white;
     box-shadow: 0 2px 10px rgba(253, 121, 168, 0.5);
 }
-
 @keyframes navbarBadgePop {
     0% { transform: scale(0); }
     70% { transform: scale(1.3); }
@@ -191,14 +181,12 @@
     width: 220px;
     margin: 0 10px;
 }
-
 .navbar .nav-search:focus-within {
     border-color: #ff6b6b;
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 20px rgba(255, 107, 107, 0.25);
     width: 280px;
 }
-
 .navbar .nav-search i {
     color: rgba(255, 255, 255, 0.5);
     font-size: 14px;
@@ -206,7 +194,6 @@
     flex-shrink: 0;
 }
 .navbar .nav-search:focus-within i { color: #ff6b6b; }
-
 .navbar .nav-search input {
     background: transparent;
     border: none;
@@ -264,152 +251,106 @@
     .navbar .nav-links { gap: 10px; }
 }
 
-/* ==================== Mobile Navbar (Logo Top + Icons Bottom) ==================== */
+/* ==================== Mobile Navbar (Floating Style) ==================== */
 @media (max-width: 768px) {
-    /* مساحة تحت عشان المحتوى ميتغطاش بالشريط السفلي */
-    body { padding-bottom: 110px; }
-    
-    /* النافبار الأساسي في السقف: اللوجو بس */
-    .navbar { 
-        padding: 15px 20px; 
-        gap: 10px; 
-        overflow: visible; 
+    body { padding-bottom: 100px; }
+
+    /* النافبار الأساسي (السقف) */
+    .navbar {
+        padding: 12px 16px;
+        gap: 10px;
         justify-content: center; 
-        background: rgba(10, 10, 26, 0.8);
-        backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-    
-    .navbar .logo { font-size: 24px; gap: 10px; }
-    .navbar .logo i { font-size: 26px; }
+
+    .navbar .logo { font-size: 22px; gap: 8px; }
+    .navbar .logo i { font-size: 24px; }
 
     /* الشريط السفلي العايم */
     .navbar .nav-links {
         position: fixed;
-        bottom: 20px;
+        bottom: 15px; 
         left: 15px;
         right: 15px;
         width: calc(100% - 30px);
         z-index: 9999;
         display: flex;
         flex-wrap: nowrap;
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: center;
         gap: 0;
-        padding: 10px 5px;
-        background: rgba(20, 20, 40, 0.95);
+        padding: 10px 4px;
+        background: rgba(20, 20, 40, 0.98);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); 
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
-    /* إخفاء "تعرف علينا" والبحث من الشريط السفلي */
-    .navbar .nav-links > a[data-nav="about"], 
-    .navbar .nav-links > .nav-search { 
-        display: none !important; 
-    }
-
-    /* تنسيق اللينكات الأساسية */
-    .navbar .nav-links > a:not(.cart-badge):not(.wishlist-badge):not(.profile-btn):not(.login-btn) {
+    /* شكل اللينكات والأيقونات */
+    .navbar .nav-links a {
         flex: 1;
+        min-width: 0;
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         gap: 4px;
-        color: rgba(255, 255, 255, 0.5);
+        padding: 6px 0;
+        font-size: 10px;
+        white-space: nowrap;
+        transform: none;
         background: transparent;
-        padding: 0;
-        margin: 0;
-        font-size: 10px;
-        font-weight: 600;
-    }
-    .navbar .nav-links > a:not(.cart-badge):not(.wishlist-badge):not(.profile-btn):not(.login-btn) i {
-        font-size: 20px;
-        transition: all 0.3s ease;
-    }
-    .navbar .nav-links > a:not(.cart-badge):not(.wishlist-badge):not(.profile-btn):not(.login-btn) span.nav-text {
-        display: block;
-        font-size: 10px;
-    }
-
-    /* تنسيق الأيقونات (الإشعارات، المفضلة، السلة، البروفايل) */
-    .navbar .cart-badge,
-    .navbar .wishlist-badge,
-    .navbar .profile-btn,
-    .navbar .login-btn,
-    .notif-bell {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        width: auto;
-        height: auto;
-        padding: 0;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    /* إخفاء الكلام الإضافي */
-    .navbar .cart-badge .nav-text,
-    .navbar .wishlist-badge .nav-text,
-    .navbar .profile-btn .profile-name-nav,
-    .navbar .login-btn .nav-text {
-        display: none !important;
-    }
-
-    .navbar .cart-badge i,
-    .navbar .wishlist-badge i,
-    .navbar .profile-btn i,
-    .navbar .login-btn i,
-    .notif-bell i {
-        font-size: 20px;
         color: rgba(255, 255, 255, 0.5);
     }
-    
-    .navbar .profile-btn .profile-avatar-mini {
-        width: 20px;
-        height: 20px;
-        font-size: 10px;
-        margin-bottom: 2px;
-    }
 
-    /* الشارات الحمراء (Badges) */
-    .navbar .cart-badge .badge-count,
-    .navbar .wishlist-badge .badge-count,
-    .notif-bell .notif-badge {
-        top: -4px;
-        right: calc(50% - 16px);
-        left: auto;
-        width: 15px;
-        height: 15px;
-        font-size: 9px;
-        border: 1.5px solid #141428;
-    }
+    .navbar .nav-links a i { font-size: 20px; }
+    .navbar .nav-links a span.nav-text { display: block; font-size: 10px; font-weight: 600; }
+    .navbar .nav-links a::after { display: none; }
 
     /* العنصر النشط */
-    .navbar .nav-links .active,
-    .navbar .nav-links .active i {
-        color: #ff6b6b !important;
+    .navbar .nav-links a.active,
+    .navbar .nav-links a.active i {
+        color: #ff6b6b;
     }
-    .navbar .nav-links .active i {
+    .navbar .nav-links a.active i {
         transform: translateY(-3px);
         filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.4));
     }
 
-    /* قائمة الإشعارات تفتح فوق الشريط السفلي */
-    .notif-dropdown { 
-        position: fixed; 
-        top: auto;
-        bottom: 90px;
-        left: 15px; 
-        right: 15px; 
-        width: auto; 
+    /* إخفاء العناصر الزيادة */
+    .navbar .nav-search { display: none; }
+    .navbar .nav-links > a[data-nav="about"] { display: none; }
+
+    .navbar .profile-name-nav { display: none; }
+    .navbar .profile-btn { padding: 6px 0; }
+
+    /* تظبيط النقاط الحمراء */
+    .navbar .wishlist-badge .badge-count,
+    .navbar .cart-badge .badge-count,
+    .notif-bell .notif-badge {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+        top: -2px;
+        right: calc(50% - 16px);
+        left: auto;
+        border: 1.5px solid #141428;
     }
+
+    /* قائمة الإشعارات فوق الشريط */
+    .notif-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 85px;
+        left: 15px;
+        right: 15px;
+        width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar { padding: 10px 12px; }
+    .navbar .nav-links { padding: 8px 4px; }
 }
