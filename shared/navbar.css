@@ -1,356 +1,653 @@
-/* ==================== shared/navbar.css ==================== */
+/* ==================== Merch Responsive Navbar ==================== */
+:root {
+    --nav-bg: rgba(10, 10, 26, 0.94);
+    --nav-panel: #17172b;
+    --nav-text: rgba(255, 255, 255, 0.76);
+    --nav-muted: rgba(255, 255, 255, 0.48);
+    --nav-accent: #ff6b6b;
+    --nav-accent-soft: rgba(255, 107, 107, 0.12);
+    --nav-border: rgba(255, 255, 255, 0.09);
+}
+
+.navbar,
+.navbar * {
+    box-sizing: border-box;
+}
 
 .navbar {
-    position: relative;
-    z-index: 10;
-    background: rgba(10, 10, 26, 0.55);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    animation: navbarSlideDown 0.7s ease-out;
     font-family: 'Cairo', sans-serif;
+    overflow: visible;
+    animation: navDropIn 0.38s ease-out both;
 }
 
-@keyframes navbarSlideDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes navDropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* ===== اللوجو ===== */
-.navbar .logo {
-    font-size: 26px;
-    font-weight: 900;
+.navbar-shell {
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 13px 28px 12px;
+}
+
+.navbar-top {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 24px;
+    min-width: 0;
+}
+
+/* Brand */
+.navbar .logo {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 9px;
     color: #fff;
     text-decoration: none;
-    transition: 0.4s;
-}
-.navbar .logo:hover { transform: scale(1.05); }
-.navbar .logo i {
-    color: #ff6b6b;
-    font-size: 30px;
-    animation: navbarLogoPulse 2.5s ease-in-out infinite;
-}
-@keyframes navbarLogoPulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
-    50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
+    white-space: nowrap;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.4px;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ===== حاوية اللينكات ===== */
-.navbar .nav-links {
+.navbar .logo:hover {
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.navbar .logo-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    color: #fff;
+    font-size: 19px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #ff7777, #f04f65);
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.24);
+}
+
+.navbar .logo-label {
+    line-height: 1;
+}
+
+/* Desktop links */
+.nav-primary-links {
     display: flex;
     align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-/* ===== اللينكات الأساسية ===== */
-.navbar .nav-links a:not(.cart-badge):not(.profile-btn):not(.login-btn):not(.wishlist-badge):not(.notif-bell) {
-    color: rgba(255, 255, 255, 0.7);
+.navbar .nav-primary-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 8px 11px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--nav-text);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    transition: 0.35s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    position: relative;
-}
-.navbar .nav-links a:not(.cart-badge):not(.profile-btn):not(.login-btn):not(.wishlist-badge):not(.notif-bell):hover {
-    color: #ff6b6b;
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
-}
-.navbar .nav-links a.active {
-    color: #ff6b6b;
-    background: rgba(255, 107, 107, 0.1);
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 700;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
-/* ===== الأيقونات (السلة، المفضلة، البروفايل) ===== */
-.navbar .cart-badge,
-.navbar .wishlist-badge,
-.navbar .profile-btn,
-.navbar .login-btn {
+.navbar .nav-primary-links a i {
+    color: var(--nav-muted);
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.navbar .nav-primary-links a:hover,
+.navbar .nav-primary-links a.active {
+    color: #fff;
+    background: var(--nav-accent-soft);
+    border-color: rgba(255, 107, 107, 0.16);
+}
+
+.navbar .nav-primary-links a:hover i,
+.navbar .nav-primary-links a.active i {
+    color: var(--nav-accent);
+}
+
+/* Search and action icons */
+.nav-actions {
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+    flex: 0 0 auto;
+}
+
+.navbar .nav-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    height: 43px;
+    padding: 4px 6px 4px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.055);
+    color: #fff;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar .nav-search-desktop {
+    width: clamp(175px, 18vw, 245px);
+    flex: 0 1 245px;
+}
+
+.navbar .nav-search:focus-within {
+    border-color: rgba(255, 107, 107, 0.68);
+    background: rgba(255, 255, 255, 0.085);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.09);
+}
+
+.navbar .nav-search .search-leading-icon {
+    flex: 0 0 auto;
+    color: var(--nav-muted);
+    font-size: 14px;
+}
+
+.navbar .nav-search:focus-within .search-leading-icon {
+    color: var(--nav-accent);
+}
+
+.navbar .nav-search input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    color: #fff;
+    background: transparent;
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    direction: rtl;
+}
+
+.navbar .nav-search input::placeholder {
+    color: rgba(255, 255, 255, 0.43);
+}
+
+.navbar .nav-search input::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+.navbar .nav-search button {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--nav-accent);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.navbar .nav-search button:hover {
+    background: #f05263;
+    transform: scale(1.04);
+}
+
+.navbar .nav-search button i {
+    font-size: 12px;
+}
+
+.navbar .nav-search-mobile {
+    display: none;
+}
+
+.navbar .nav-icon-button,
+.navbar .notif-bell {
+    position: relative;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 42px;
     height: 42px;
+    flex: 0 0 42px;
     padding: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
-    position: relative;
+    border: 1px solid var(--nav-border);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.83);
+    background: rgba(255, 255, 255, 0.045);
     text-decoration: none;
-    color: white !important;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
-.navbar .cart-badge:hover,
-.navbar .wishlist-badge:hover,
-.navbar .profile-btn:hover,
-.navbar .login-btn:hover {
-    background: rgba(255, 107, 107, 0.15);
-    border-color: rgba(255, 107, 107, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+
+.navbar .nav-icon-button:hover,
+.navbar .notif-bell:hover {
+    color: #fff;
+    border-color: rgba(255, 107, 107, 0.38);
+    background: rgba(255, 107, 107, 0.12);
+    transform: translateY(-1px);
 }
-.navbar .cart-badge i,
-.navbar .wishlist-badge i,
-.navbar .profile-btn i,
-.navbar .login-btn i {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.8);
+
+.navbar .nav-icon-button > i,
+.navbar .notif-bell > i {
     margin: 0;
+    color: inherit;
+    font-size: 17px;
 }
 
-/* إخفاء النصوص جوه الأيقونات */
-.navbar .cart-badge .nav-text,
-.navbar .wishlist-badge .nav-text,
-.navbar .profile-btn .profile-name-nav,
-.navbar .login-btn .nav-text {
-    display: none !important;
+.navbar .nav-icon-button.active {
+    color: var(--nav-accent);
+    background: var(--nav-accent-soft);
+    border-color: rgba(255, 107, 107, 0.22);
 }
 
-/* صورة البروفايل الصغيرة */
-.navbar .profile-btn .profile-avatar-mini {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
+.navbar .profile-avatar-mini {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    width: 29px;
+    height: 29px;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(145deg, #6c5ce7, #a29bfe);
+    font-size: 13px;
     font-weight: 800;
-    color: white;
 }
 
-/* ===== الشارات (Badges) ===== */
-.navbar .cart-badge .badge-count,
-.navbar .wishlist-badge .badge-count {
+/* Count badges */
+.navbar .badge-count,
+.navbar .notif-badge,
+.mobile-bottom-nav .badge-count {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex;
+    top: -5px;
+    right: -5px;
+    z-index: 2;
+    display: none;
     align-items: center;
     justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
     border: 2px solid #0a0a1a;
+    border-radius: 999px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6b6b, #ed4264);
+    font-family: 'Cairo', sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1;
     pointer-events: none;
-    animation: navbarBadgePop 0.4s ease-out;
-}
-.navbar .cart-badge .badge-count {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-    color: white;
-    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
-}
-.navbar .wishlist-badge .badge-count {
-    background: linear-gradient(135deg, #fd79a8, #e84393);
-    color: white;
-    box-shadow: 0 2px 10px rgba(253, 121, 168, 0.5);
-}
-@keyframes navbarBadgePop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.3); }
-    100% { transform: scale(1); }
 }
 
-/* ===== مربع البحث ===== */
-.navbar .nav-search {
+.navbar .wishlist-badge .badge-count,
+.mobile-bottom-nav .wishlist-badge .badge-count {
+    background: linear-gradient(135deg, #ff7fa0, #e84393);
+}
+
+/* Notifications dropdown */
+.navbar .notif-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.navbar .notif-bell {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+}
+
+.navbar .notif-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 1200;
+    display: none;
+    flex-direction: column;
+    width: min(340px, calc(100vw - 24px));
+    max-height: min(420px, calc(100vh - 120px));
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 17px;
+    background: #12122a;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.42);
+    text-align: right;
+}
+
+.navbar .notif-dropdown.show {
+    display: flex;
+    animation: notifMenuEnter 0.18s ease-out both;
+}
+
+@keyframes notifMenuEnter {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar .notif-header {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    padding: 0 16px;
-    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    width: 220px;
-    margin: 0 10px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.025);
 }
-.navbar .nav-search:focus-within {
-    border-color: #ff6b6b;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.25);
-    width: 280px;
-}
-.navbar .nav-search i {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    transition: 0.3s;
-    flex-shrink: 0;
-}
-.navbar .nav-search:focus-within i { color: #ff6b6b; }
-.navbar .nav-search input {
-    background: transparent;
-    border: none;
-    padding: 10px;
-    color: white;
-    font-size: 14px;
+
+.navbar .notif-header h4 {
+    margin: 0;
+    color: #fff;
     font-family: 'Cairo', sans-serif;
-    outline: none;
-    width: 100%;
-    min-width: 0;
-}
-.navbar .nav-search input::placeholder { color: rgba(255, 255, 255, 0.4); }
-
-/* ===== الإشعارات ===== */
-.notif-wrapper { position: relative; display: inline-block; }
-.notif-bell {
-    display: flex; align-items: center; justify-content: center;
-    width: 42px; height: 42px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease; cursor: pointer; color: white;
-}
-.notif-bell:hover { background: rgba(255, 107, 107, 0.15); border-color: rgba(255, 107, 107, 0.4); transform: translateY(-2px); }
-.notif-bell i { font-size: 18px; color: rgba(255, 255, 255, 0.8); }
-.notif-bell .notif-badge {
-    position: absolute; top: -4px; right: -4px; width: 18px; height: 18px;
-    background: #ff4757; border-radius: 50%; font-size: 10px; font-weight: 700;
-    display: none; align-items: center; justify-content: center;
-    border: 2px solid #0a0a1a; color: white;
+    font-size: 14px;
+    font-weight: 800;
 }
 
-.notif-dropdown {
-    position: absolute; top: calc(100% + 15px); left: 0; width: 320px;
-    background: #12122a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000; display: none; flex-direction: column; overflow: hidden;
-    animation: notifPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: right;
-}
-.notif-dropdown.show { display: flex; }
-@keyframes notifPop { from { opacity: 0; transform: translateY(-10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.notif-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); }
-.notif-header h4 { color: white; font-size: 14px; margin: 0; }
-.notif-header button { background: none; border: none; color: #6c5ce7; font-size: 12px; cursor: pointer; font-family: inherit; }
-.notif-list { max-height: 300px; overflow-y: auto; padding: 10px; }
-.notif-item { padding: 12px; border-radius: 8px; margin-bottom: 5px; display: flex; gap: 12px; cursor: pointer; transition: 0.3s; }
-.notif-item:hover { background: rgba(255,255,255,0.05); }
-
-/* ==================== Media Queries ==================== */
-
-@media (max-width: 1200px) {
-    .navbar .nav-search { width: 180px; }
-    .navbar .nav-search:focus-within { width: 220px; }
-}
-@media (max-width: 992px) {
-    .navbar .nav-search { display: none; }
-    .navbar .nav-links { gap: 10px; }
+.navbar .notif-header button {
+    max-width: none;
+    padding: 4px 0;
+    border: 0;
+    color: #a29bfe;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 11px;
 }
 
-/* ==================== Mobile Navbar (Floating Style) ==================== */
-@media (max-width: 768px) {
-    body { padding-bottom: 100px !important; }
+.navbar .notif-list {
+    max-height: 330px;
+    overflow-y: auto;
+    padding: 9px;
+}
 
-    /* النافبار الأساسي (السقف) */
-    .navbar {
-        padding: 12px 16px !important;
-        justify-content: center !important; 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        display: flex !important;
+.navbar .notif-item {
+    display: flex;
+    gap: 11px;
+    margin: 0 0 5px;
+    padding: 11px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.18s ease;
+}
+
+.navbar .notif-item:hover {
+    background: rgba(255, 255, 255, 0.055) !important;
+}
+
+/* Mobile bottom navigation is hidden on desktop */
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 1180px) {
+    .navbar-shell { padding-right: 20px; padding-left: 20px; }
+    .navbar-top { gap: 15px; }
+    .navbar .nav-primary-links { gap: 1px; }
+    .navbar .nav-primary-links a { padding-right: 8px; padding-left: 8px; font-size: 12px; }
+    .navbar .nav-primary-links a[data-nav="about"] { display: none; }
+    .navbar .nav-search-desktop { width: 190px; flex-basis: 190px; }
+    .nav-actions { gap: 7px; }
+}
+
+@media (max-width: 940px) and (min-width: 781px) {
+    .navbar .logo { font-size: 21px; gap: 7px; }
+    .navbar .logo-mark { width: 38px; height: 38px; flex-basis: 38px; }
+    .navbar .nav-primary-links a { gap: 5px; padding: 7px 6px; font-size: 11px; }
+    .navbar .nav-search-desktop { width: 155px; flex-basis: 155px; }
+    .navbar .nav-icon-button,
+    .navbar .notif-bell { width: 38px; height: 38px; flex-basis: 38px; border-radius: 12px; }
+}
+
+/* ==================== Mobile ==================== */
+@media (max-width: 780px) {
+    body {
+        padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
     }
 
-    .navbar .logo { font-size: 22px !important; gap: 8px; }
-    .navbar .logo i { font-size: 24px !important; }
-
-    /* الشريط السفلي العايم */
-    .navbar .nav-links {
-        position: fixed !important;
-        bottom: 15px !important; 
-        left: 15px !important;
-        right: 15px !important;
-        width: calc(100% - 30px) !important;
-        z-index: 9999 !important;
-        display: flex !important;
+    .navbar.navbar {
+        display: block !important;
         flex-wrap: nowrap !important;
-        justify-content: space-evenly !important;
-        align-items: center !important;
         gap: 0 !important;
-        padding: 10px 4px !important;
-        background: rgba(20, 20, 40, 0.98) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 20px !important; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important; 
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
+        padding: 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     }
 
-    /* شكل اللينكات والأيقونات */
-    .navbar .nav-links a {
-        flex: 1 !important;
-        min-width: 0;
+    .navbar .navbar-shell {
+        width: 100%;
+        max-width: none;
+        padding: 11px 14px 13px;
+    }
+
+    .navbar .navbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .navbar .logo {
+        gap: 8px;
+        font-size: 21px;
+    }
+
+    .navbar .logo-mark {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
+        border-radius: 13px;
+        font-size: 17px;
+    }
+
+    .navbar .nav-primary-links,
+    .navbar .nav-search-desktop {
+        display: none !important;
+    }
+
+    .navbar .nav-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .navbar .nav-actions > .desktop-only {
+        display: none !important;
+    }
+
+    .navbar .notif-wrapper,
+    .navbar .notif-bell {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .navbar .notif-bell {
+        border-radius: 13px;
+    }
+
+    .navbar .nav-search.nav-search-mobile {
         display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 4px !important;
-        padding: 6px 0 !important;
-        font-size: 10px !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: 45px;
+        margin: 11px 0 0 !important;
+        padding-right: 6px;
+        padding-left: 13px;
+        order: initial !important;
+        border-radius: 14px;
+        background: #17172b;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+    }
+
+    .navbar .nav-search.nav-search-mobile input {
+        font-size: 13px;
+    }
+
+    .navbar .nav-search.nav-search-mobile button {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+        border-radius: 11px;
+    }
+
+    /* The floating bottom bar only contains the five most-used destinations. */
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 50%;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        z-index: 1100;
+        display: flex !important;
+        align-items: stretch;
+        justify-content: space-around;
+        gap: 3px;
+        width: min(520px, calc(100% - 24px));
+        min-height: 67px;
+        padding: 7px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 22px;
+        background: rgba(19, 19, 39, 0.96);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.18);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        transform: translateX(-50%);
+    }
+
+    .mobile-bottom-nav > a {
+        position: relative;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 0;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        min-height: 51px;
+        padding: 5px 2px;
+        border: 1px solid transparent;
+        border-radius: 15px;
+        color: rgba(255, 255, 255, 0.58);
+        background: transparent;
+        text-decoration: none;
         white-space: nowrap;
+        font-family: 'Cairo', sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1.15;
         transform: none !important;
-        background: transparent !important;
-        color: rgba(255, 255, 255, 0.5) !important;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    .navbar .nav-links a i { font-size: 20px !important; }
-    .navbar .nav-links a span.nav-text { display: block !important; font-size: 10px !important; font-weight: 600; }
-    .navbar .nav-links a::after { display: none !important; }
-
-    /* العنصر النشط */
-    .navbar .nav-links a.active,
-    .navbar .nav-links a.active i {
-        color: #ff6b6b !important;
-    }
-    .navbar .nav-links a.active i {
-        transform: translateY(-3px) !important;
-        filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.4));
+    .mobile-bottom-nav > a > i,
+    .navbar .mobile-nav-icon-wrap > i {
+        display: block;
+        color: inherit;
+        font-size: 19px;
+        line-height: 1;
+        transition: transform 0.2s ease, color 0.2s ease;
     }
 
-    /* إخفاء العناصر الزيادة */
-    .navbar .nav-search { display: none !important; }
-    .navbar .nav-links > a[data-nav="about"] { display: none !important; }
-
-    .navbar .profile-name-nav { display: none !important; }
-    .navbar .profile-btn { padding: 6px 0 !important; }
-
-    /* تظبيط النقاط الحمراء */
-    .navbar .wishlist-badge .badge-count,
-    .navbar .cart-badge .badge-count,
-    .notif-bell .notif-badge {
-        width: 16px !important;
-        height: 16px !important;
-        font-size: 9px !important;
-        top: -2px !important;
-        right: calc(50% - 16px) !important;
-        left: auto !important;
-        border: 1.5px solid #141428 !important;
+    .navbar .mobile-nav-icon-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 23px;
+        height: 22px;
     }
 
-    /* قائمة الإشعارات فوق الشريط */
-    .notif-dropdown {
-        position: fixed !important;
-        top: auto !important;
-        bottom: 85px !important;
-        left: 15px !important;
-        right: 15px !important;
-        width: auto !important;
+    .mobile-bottom-nav > a > span:last-child {
+        display: block !important;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 10px;
+    }
+
+    .mobile-bottom-nav > a.active {
+        color: var(--nav-accent) !important;
+        border-color: rgba(255, 107, 107, 0.11);
+        background: rgba(255, 107, 107, 0.105) !important;
+    }
+
+    .mobile-bottom-nav > a.active > i,
+    .mobile-bottom-nav > a.active .mobile-nav-icon-wrap > i {
+        color: var(--nav-accent) !important;
+        transform: translateY(-1px);
+    }
+
+    .mobile-bottom-nav .badge-count {
+        top: -6px;
+        right: -8px;
+        min-width: 16px;
+        height: 16px;
+        padding: 0 3px;
+        border-width: 1.5px;
+        font-size: 8px;
+    }
+
+    /* Open the dropdown above the floating navigation on small screens. */
+    .navbar .notif-dropdown {
+        position: fixed;
+        top: auto;
+        right: 12px;
+        bottom: calc(88px + env(safe-area-inset-bottom));
+        left: 12px;
+        width: auto;
+        max-height: min(55vh, 430px);
+    }
+
+    .navbar .notif-list {
+        max-height: min(42vh, 330px);
     }
 }
 
-@media (max-width: 480px) {
-    .navbar { padding: 10px 12px !important; }
-    .navbar .nav-links { padding: 8px 4px !important; }
+@media (max-width: 380px) {
+    .navbar .navbar-shell { padding-right: 11px; padding-left: 11px; }
+    .navbar .logo { font-size: 19px; }
+    .navbar .logo-mark { width: 36px; height: 36px; flex-basis: 36px; }
+    .mobile-bottom-nav { width: calc(100% - 16px); gap: 1px; padding-right: 4px; padding-left: 4px; }
+    .mobile-bottom-nav > a { font-size: 9px; }
+    .mobile-bottom-nav > a > span:last-child { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar,
+    .navbar *,
+    .navbar *::before,
+    .navbar *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
